@@ -2,27 +2,31 @@ import React from 'react';
 import './burger.css'
 
 const Burger = ({ state, setState }) => {
-  const iconMenu = document.querySelector('.menu__icon')
-  const menuBody = document.querySelector('.menu__body')
-
+  let iconMenu, menuBody;
   const pc = e => {
-    if (e.target.innerWidth > 769) {
+    if (e.target.innerWidth > 768) {
+      window.removeEventListener('resize', pc);
+      window.addEventListener('resize', mobile);
       setState(false);
-      window.onresize = mobile;
     }
   }
 
   const mobile = e => {
-    if (e.target.innerWidth < 769) {
-      setState(true);
+    iconMenu = document.querySelector('.menu__icon')
+    menuBody = document.querySelector('.menu__body')
+    if (e.target.innerWidth < 768) {
       iconMenu.addEventListener('click', function (e) {
         document.body.classList.toggle('_lock');
         iconMenu.classList.toggle('_active');
         menuBody.classList.toggle('_active');
       })
-      window.onresize = pc;
+      window.removeEventListener('resize', mobile);
+      window.addEventListener('resize', pc);
+      setState(true);
     }
   }
+
+  window.onresize = mobile;
 
   const isMobile = {
     Android: function () {
@@ -54,9 +58,6 @@ const Burger = ({ state, setState }) => {
   } else {
     document.body.classList.add('_pc');
   };
-  // Меню бургер
-
-  // Прокрутка при клике
   const menuLinks = Array.from(document.querySelectorAll('.menu__link[data-goto]'));
   if (menuLinks.length) {
     menuLinks.forEach(elem => {
