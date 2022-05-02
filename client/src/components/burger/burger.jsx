@@ -2,31 +2,52 @@ import React from 'react';
 import './burger.css'
 
 const Burger = ({ state, setState }) => {
-  let iconMenu, menuBody;
-  const pc = e => {
+  let iconMenu = document.querySelector('.menu__icon')
+  let menuBody = document.querySelector('.menu__body')
+
+  function pc(e) {
     if (e.target.innerWidth > 768) {
-      window.removeEventListener('resize', pc);
-      window.addEventListener('resize', mobile);
-      setState(false);
+      e.target.onresize = mobile;
     }
   }
 
-  const mobile = e => {
-    iconMenu = document.querySelector('.menu__icon')
-    menuBody = document.querySelector('.menu__body')
+  function mobile(e) {
     if (e.target.innerWidth < 768) {
+      e.target.onresize = null;
+      iconMenu = document.querySelector('.menu__icon')
+      menuBody = document.querySelector('.menu__body')
       iconMenu.addEventListener('click', function (e) {
         document.body.classList.toggle('_lock');
         iconMenu.classList.toggle('_active');
         menuBody.classList.toggle('_active');
-      })
-      window.removeEventListener('resize', mobile);
-      window.addEventListener('resize', pc);
-      setState(true);
+      });
+      const menuLinks = Array.from(document.querySelectorAll('.menu__link[data-goto]'));
+      if (menuLinks.length) {
+        menuLinks.forEach(elem => {
+          elem.addEventListener('click', onMenuClick)
+        })
+        function onMenuClick(e) {
+          const menuLink = e.target;
+          if (menuLink.dataset.goto && document.querySelector(menuLink.dataset.goto)) {
+            const gotoBlock = document.querySelector(menuLink.dataset.goto);
+            const gotoBlockValue = gotoBlock.getBoundingClientRect().top + window.pageYOffset - document.querySelector('header').offsetHeight;
+
+            if (iconMenu.classList.contains('_active')) {
+              document.body.classList.remove('_lock');
+              iconMenu.classList.remove('_active');
+              menuBody.classList.remove('_active');
+            }
+            window.scrollTo({
+              top: gotoBlockValue,
+              behavior: "smooth"
+            });
+            e.preventDefault();
+          }
+        }
+      };
+      e.target.onresize = pc;
     }
   }
-
-  window.onresize = mobile;
 
   const isMobile = {
     Android: function () {
@@ -55,33 +76,43 @@ const Burger = ({ state, setState }) => {
   };
   if (isMobile.any()) {
     document.body.classList.add('_touch');
+
+    iconMenu.addEventListener('click', function (e) {
+      document.body.classList.toggle('_lock');
+      iconMenu.classList.toggle('_active');
+      menuBody.classList.toggle('_active');
+    });
+    const menuLinks = Array.from(document.querySelectorAll('.menu__link[data-goto]'));
+    if (menuLinks.length) {
+      menuLinks.forEach(elem => {
+        elem.addEventListener('click', onMenuClick)
+      })
+      function onMenuClick(e) {
+        const menuLink = e.target;
+        if (menuLink.dataset.goto && document.querySelector(menuLink.dataset.goto)) {
+          const gotoBlock = document.querySelector(menuLink.dataset.goto);
+          const gotoBlockValue = gotoBlock.getBoundingClientRect().top + window.pageYOffset - document.querySelector('header').offsetHeight;
+
+          if (iconMenu.classList.contains('_active')) {
+            document.body.classList.remove('_lock');
+            iconMenu.classList.remove('_active');
+            menuBody.classList.remove('_active');
+          }
+          window.scrollTo({
+            top: gotoBlockValue,
+            behavior: "smooth"
+          });
+          e.preventDefault();
+        }
+      }
+    };
+    window.onresize = pc;
   } else {
+    window.onresize = mobile;
     document.body.classList.add('_pc');
   };
-  const menuLinks = Array.from(document.querySelectorAll('.menu__link[data-goto]'));
-  if (menuLinks.length) {
-    menuLinks.forEach(elem => {
-      elem.addEventListener('click', onMenuClick)
-    })
-    function onMenuClick(e) {
-      const menuLink = e.target;
-      if (menuLink.dataset.goto && document.querySelector(menuLink.dataset.goto)) {
-        const gotoBlock = document.querySelector(menuLink.dataset.goto);
-        const gotoBlockValue = gotoBlock.getBoundingClientRect().top + window.pageYOffset - document.querySelector('header').offsetHeight;
 
-        if (iconMenu.classList.contains('_active')) {
-          document.body.classList.remove('_lock');
-          iconMenu.classList.remove('_active');
-          menuBody.classList.remove('_active');
-        }
-        window.scrollTo({
-          top: gotoBlockValue,
-          behavior: "smooth"
-        });
-        e.preventDefault();
-      }
-    }
-  };
+
 
   return (
     <header>
@@ -91,9 +122,9 @@ const Burger = ({ state, setState }) => {
         </div>
         <nav className="menu__body">
           <ul className="menu__list">
-            <li><a data-goto=".page__section-1" href="" className="menu__link">Раздел №1</a></li>
-            <li><a data-goto=".page__section-2" href="" className="menu__link">Раздел №2</a></li>
-            <li><a data-goto=".page__section-3" href="" className="menu__link">Раздел №3</a></li>
+            <li><a data-goto=".page__section-1" href="" className="menu__link">Добавить репецт</a></li>
+            <li><a data-goto=".page__section-2" href="" className="menu__link">Рецепты</a></li>
+            <li><a data-goto=".page__section-3" href="" className="menu__link">Сладости</a></li>
             <li>
               <a href="" className="menu__link">Страница 1</a>
               <span className="menu__arrow"></span>
@@ -109,7 +140,6 @@ const Burger = ({ state, setState }) => {
                 </li>
               </ul>
             </li>
-            <li><a href="" className="menu__link">Страница 2</a></li>
           </ul>
         </nav>
       </div>

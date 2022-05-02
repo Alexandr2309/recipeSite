@@ -7,8 +7,15 @@
   margin: 20px 0 0 15px;
 }
 .menu__body {
+  max-width: 1000px;
+  margin: 0px auto;
 }
 .menu__list {
+  margin-top: 15px;
+  justify-content: center;
+  background-color: #6c9225;
+  border-radius: 15px 15px 0 0;
+  padding: 15px;
 }
 .menu__list > li {
   position: relative;
@@ -16,7 +23,7 @@
 }
 .menu__link {
   color: #fff;
-  font-size: 18px;
+  font-size: 22px;
 }
 .menu__link:hover {
   text-decoration: underline;

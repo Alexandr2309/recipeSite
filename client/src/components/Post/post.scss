@@ -1,0 +1,59 @@
+.post {
+  border: 5px solid #ECE3DA;
+  max-width: 700px;
+  margin: 20px 20px 10px;
+  & a {
+    text-decoration: none;
+    color: inherit;
+    transition: all .1s ease 0s;
+    &:hover{
+      text-decoration: underline;
+      color: rgb(80, 101, 192);
+    }
+  }
+}
+.post__title {
+  position: relative;
+  & h3 {
+    background: #ECE3DA;
+    border-radius: 0px 0 15px 15px;
+    font-size: 24px;
+    padding: 5px;
+    display: inline-block;
+    min-width: 313px;
+    min-height: 30px;
+  }
+}
+.post__block {
+  display: flex;
+  column-gap: 20px;
+}
+.post__img {
+  position: relative;
+  width: 300px;
+  margin: 15px 0 15px 15px;
+  border: 1px solid #81A03C;
+  height: 170px;
+  padding: 2px;
+  & img {
+    height: 100%;
+    width: auto;
+  }
+}
+.post__description {
+  text-align: justify;
+  padding: 0px 9px;
+  margin-top: 15px;
+  font-size: 18px;
+}
+.post__footer {
+  display: flex;
+  justify-content: space-between;
+  background: #ECE3DA;
+  padding: 10px;
+  font-size: 16px;
+}
+.post__author {
+}
+.post__data {
+}
