@@ -37,10 +37,10 @@
   min-width: 200px;
 }
 .menu__sub-list > li {
-  margin: 0px 0px 10px 0px;
+  margin: 0px 0px 10px 7px;
 }
 .menu__sub-list > li:last-child {
-  margin: 0px;
+  margin: 3px;
 }
 .menu__sub-link {
   color: #fff;

@@ -40,7 +40,6 @@ export const cl = {
     fontWeight: 600,
     color: "#563916",
     letterSpacing: '0.2em',
-    lineHeight: '15px'
   },
   inpFocus: {
     boxShadow: '0px 2px 10px rgb(0 0 0 / 12%)'

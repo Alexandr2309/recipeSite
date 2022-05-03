@@ -2,9 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import './addForm.css';
 
 const AddForm = () => {
+  const [tags, setTags] = useState(['выпечка', 'куриное филе']);
+  const [value, setValue] = useState('');
 
+  function addTags(e) {
+    if (e.key === 'Enter') {
+      setTags([...tags, value]);
+      setValue('');
+    }
+  }
   return (
-    <form >
+    <form noValidate>
       <label htmlFor="recipes_title">Название блюда *:</label>
       <p><input type="text" id="recipes_title" name="recipes_title" size={65} required /></p>
       <label htmlFor="recipes_photo">Фото готового блюда:</label>
@@ -24,12 +32,30 @@ const AddForm = () => {
       <p className="comment">Полное описание блюда</p>
       <label htmlFor="recipes_title">Количество порций* :</label>
       <p><input type="text" id="recipes_title" name="recipes_title" size={5} required /></p>
+      <label htmlFor="recipes_tags">Теги* :</label>
+      <p><input type="text" id="recipes_tags" name="recipes_tags" size={32} required
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        onKeyDown={addTags}
+      /></p>
+      {tags.length
+        ? <div className="tags__container" style={{ width: 250 }}>
+          <ul> {tags.map((tag, i) => {
+            return <li key={i} className='tags'>
+              <span key={i + 'text'}>{tag}</span>
+              <a key={i + 'link'} href="#" ></a>
+            </li>
+          })}
+          </ul>
+        </div>
+        : ''
+      }
       <label htmlFor="recipes_title">Было готово за* :</label>
       <p><input type="text" id="recipes_title" name="recipes_title" size={5} required /> мин</p>
       <label htmlFor="recipes_title">Вы потратили времени* :</label>
       <p><input type="text" id="recipes_title" name="recipes_title" size={5} required /> мин</p>
       <div className="field">
-        <input type="submit" id="" name="save" class="" value="Сохранить" />
+        <input type="submit" id="" name="save" value="Сохранить" />
       </div>
     </form>
   )

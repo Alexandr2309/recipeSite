@@ -1,12 +1,12 @@
 .post {
-  border: 5px solid #ECE3DA;
+  border: 5px solid #ece3da;
   max-width: 700px;
   margin: 20px 20px 10px;
   & a {
     text-decoration: none;
     color: inherit;
-    transition: all .1s ease 0s;
-    &:hover{
+    transition: all 0.1s ease 0s;
+    &:hover {
       text-decoration: underline;
       color: rgb(80, 101, 192);
     }
@@ -15,7 +15,7 @@
 .post__title {
   position: relative;
   & h3 {
-    background: #ECE3DA;
+    background: #ece3da;
     border-radius: 0px 0 15px 15px;
     font-size: 24px;
     padding: 5px;
@@ -32,7 +32,7 @@
   position: relative;
   width: 300px;
   margin: 15px 0 15px 15px;
-  border: 1px solid #81A03C;
+  border: 1px solid #81a03c;
   height: 170px;
   padding: 2px;
   & img {
@@ -49,7 +49,7 @@
 .post__footer {
   display: flex;
   justify-content: space-between;
-  background: #ECE3DA;
+  background: #ece3da;
   padding: 10px;
   font-size: 16px;
 }

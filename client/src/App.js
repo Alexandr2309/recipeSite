@@ -13,10 +13,6 @@ function App() {
   ])
   return (
     <div className="App">
-      {/* <Burger
-        state={state}
-        setState={setState}
-      /> */}
       <Posts posts={posts} />
     </div>
   );
