@@ -122,9 +122,9 @@ const Burger = ({ state, setState }) => {
         </div>
         <nav className="menu__body">
           <ul className="menu__list">
-            <li><Link to='/' data-goto=".page__section-2" className="menu__link">Рецепты</Link></li>
+            <li><Link to='posts' data-goto=".page__section-2" className="menu__link">Рецепты</Link></li>
             <li><Link to='form' data-goto=".page__section-1" className="menu__link">Добавить репецт</Link></li>
-            <li><Link to='/' data-goto=".page__section-3" className="menu__link">Сладости</Link></li>
+            <li><Link to='sweets' data-goto=".page__section-3" className="menu__link">Сладости</Link></li>
             <li>
               <a href="" className="menu__link">Избранное</a>
               <span className="menu__arrow"></span>

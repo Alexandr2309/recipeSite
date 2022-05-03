@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './post.css';
 
-const Post = ({ title, author, date, about, img }) => {
+const Post = ({ id, title, author, date, about, img }) => {
+  const route = useNavigate();
+  console.log(id)
   let datenow = ("" + (new Date(date)).toISOString())
     .replace(/^([^T]+)T(.+)$/, '$1')
     .replace(/^(\d+)-(\d+)-(\d+)$/, '$3.$2.$1')
@@ -17,7 +20,7 @@ const Post = ({ title, author, date, about, img }) => {
         <div className="post__description">
           {about}
           <br /><br />
-          <a href="#">Читать далее...</a>
+          <button onClick={() => route(`${id}`)}>Читать далее...</button>
         </div>
       </div>
       <div className="post__footer">

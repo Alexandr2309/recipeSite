@@ -1,17 +1,20 @@
 .post {
   border: 5px solid #ECE3DA;
-  max-width: 700px;
+  max-width: 800px;
   margin: 20px 20px 10px;
 }
 
-.post a {
+.post button {
   text-decoration: none;
+  background: none;
+  border: 0px;
+  font-size: 17px;
   color: inherit;
   -webkit-transition: all .1s ease 0s;
   transition: all .1s ease 0s;
 }
 
-.post a:hover {
+.post button:hover {
   text-decoration: underline;
   color: #5065c0;
 }
@@ -40,7 +43,7 @@
 
 .post__img {
   position: relative;
-  width: 300px;
+  width: 325px;
   margin: 15px 0 15px 15px;
   border: 1px solid #81A03C;
   height: 170px;

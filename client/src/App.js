@@ -1,20 +1,40 @@
-import { useState, useId, useRef } from 'react';
+import { useId, useState, useMemo } from 'react';
+import shortid from 'shortid'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Burger from './components/burger/burger';
-import Post from './components/Post/Post';
-import Posts from './components/Posts';
+import { NowPosts, PostsContext } from './context/Context';
+import Sweets from './views/forAnya/Sweets';
+import Form from './views/Form/Form';
+import All from './views/All/All';
+import PostPage from './components/PostPage';
 
 function App() {
-  const [state, setState] = useState(false);
   const [posts, setPosts] = useState([
-    { id: useId(), title: 'Первое', author: "Коломыцкий А.М", date: Date.now() - 100000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: './logo512.png' },
-    { id: useId(), title: 'Второе', author: "Коломыцкая Л.В", date: Date.now() - 10, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: './logo512.png' },
-    { id: useId(), title: 'Третье', author: "Джиба С.Е", date: Date.now() - 150000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: './logo512.png' }
-  ])
+    { id: useId(), title: 'Первое', author: "Коломыцкий А.М", date: Date.now() - 100000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: './logo512.png', sweets: false },
+    { id: useId(), title: 'Второе', author: "Коломыцкая Л.В", date: Date.now() - 10, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: './logo512.png', sweets: false },
+    { id: useId(), title: 'Третье', author: "Джиба С.Е", date: Date.now() - 150000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: './logo512.png', sweets: false },
+    { id: useId(), title: 'Пироженное', author: "Джиба С.Е", date: Date.now() - 150000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: './logo512.png', sweets: true }
+  ]);
+  const [nowPosts, updatePosts] = useState([...posts])
+  const value = useMemo(
+    () => ({ nowPosts, updatePosts }),
+    [nowPosts]
+  )
   return (
-    <div className="App">
-      <Posts posts={posts} />
-    </div>
+    <PostsContext.Provider value={posts}>
+      <NowPosts.Provider value={value}>
+        <BrowserRouter>
+          <Burger />
+          <Routes>
+            <Route element={<All />} path='/posts'></Route>
+            <Route element={<Form />} path='/form'></Route>
+            <Route element={<Sweets />} path='/sweets'></Route>
+            <Route element={<PostPage />} path='/posts/:id'></Route>
+            <Route element={<All />} path='*'></Route>
+          </Routes>
+        </BrowserRouter></NowPosts.Provider>
+    </PostsContext.Provider>
   );
 }
 

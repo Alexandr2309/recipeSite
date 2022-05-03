@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './addForm.css';
 
 const AddForm = () => {
-  const [tags, setTags] = useState(['выпечка', 'куриное филе']);
+  const [tags, setTags] = useState([]);
   const [value, setValue] = useState('');
 
   function addTags(e) {
@@ -11,8 +11,12 @@ const AddForm = () => {
       setValue('');
     }
   }
+  const deleteTag = e => {
+    e.preventDefault();
+    setTags(tags.filter((tag, i) => tag !== e.target.dataset.text));
+  }
   return (
-    <form noValidate>
+    <form onSubmit={e => e.preventDefault()} noValidate>
       <label htmlFor="recipes_title">Название блюда *:</label>
       <p><input type="text" id="recipes_title" name="recipes_title" size={65} required /></p>
       <label htmlFor="recipes_photo">Фото готового блюда:</label>
@@ -32,7 +36,12 @@ const AddForm = () => {
       <p className="comment">Полное описание блюда</p>
       <label htmlFor="recipes_title">Количество порций* :</label>
       <p><input type="text" id="recipes_title" name="recipes_title" size={5} required /></p>
-      <label htmlFor="recipes_tags">Теги* :</label>
+      <div className="">
+        <input type="checkbox" id="recipes_sweet" name="recipes_sweet" required />
+        <label htmlFor="recipes_sweet" className='sweet__check'>Сладости* :</label>
+      </div>
+      <p></p>
+      <label htmlFor="recipes_tags" className='recipes_tags'>Теги* :</label>
       <p><input type="text" id="recipes_tags" name="recipes_tags" size={32} required
         value={value}
         onChange={e => setValue(e.target.value)}
@@ -43,7 +52,7 @@ const AddForm = () => {
           <ul> {tags.map((tag, i) => {
             return <li key={i} className='tags'>
               <span key={i + 'text'}>{tag}</span>
-              <a key={i + 'link'} href="#" ></a>
+              <a key={i + 'link'} href="#" onClick={deleteTag} data-text={tag}></a>
             </li>
           })}
           </ul>
