@@ -4,7 +4,8 @@
   margin-left: 15px;
   margin-bottom: 8px;
   margin-right: 25px;
-  min-height: 170px;
+  border: 1px solid #81a03c;
+  padding: 2px;
 }
 
 .page__img img {
@@ -58,6 +59,7 @@
   text-align: justify;
   margin: 0 5px;
   padding: 15px;
+  padding-top: 6px;
 }
 
 .page__portion::before {

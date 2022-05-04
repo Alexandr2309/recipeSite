@@ -20,17 +20,18 @@ const Posts = ({ posts, sweets = false }) => {
               about={about}
               img={img} />
           })
-        : posts.map(post => {
-          const { id, title, author, date, about, img } = post;
-          return <Post
-            key={id}
-            id={id}
-            title={title}
-            author={author}
-            date={date}
-            about={about}
-            img={img} />
-        })
+        : posts.filter(post => !post.sweets)
+          .map(post => {
+            const { id, title, author, date, about, img } = post;
+            return <Post
+              key={id}
+              id={id}
+              title={title}
+              author={author}
+              date={date}
+              about={about}
+              img={img} />
+          })
       }
     </div>
   )

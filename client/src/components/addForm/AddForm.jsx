@@ -31,7 +31,7 @@ const AddForm = () => {
       <label htmlFor="recipes_photo_desc">Пошаговое описание(фотографии):</label>
       <p><input type="file" id="recipes_photo_desc" name="recipes_photo_desc" /></p>
       <p className='comment'>Если у Вас есть пошаговые фото процесса приготовления, добавьте их здесь. Вы можете одновременно выбрать несколько файлов для добавления, для этого нажмите на необходимых файлах удерживая кнопку "Ctrl" на клавиатуре.</p>
-      <label htmlFor="recipes_ingrid">Текстовое описание* :</label>
+      <label htmlFor="recipes_ingrid">Ингридиенты* :</label>
       <p><textarea id="recipes_ingrid" name="recipes_ingrid" required cols={40} rows={10} /></p>
       <p className="comment">Полное описание блюда</p>
       <label htmlFor="recipes_title">Количество порций* :</label>

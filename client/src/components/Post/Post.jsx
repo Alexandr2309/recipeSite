@@ -1,12 +1,20 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import './post.css';
 
 const Post = ({ id, title, author, date, about, img }) => {
   const route = useNavigate();
+  const param = useParams();
   let datenow = ("" + (new Date(date)).toISOString())
     .replace(/^([^T]+)T(.+)$/, '$1')
-    .replace(/^(\d+)-(\d+)-(\d+)$/, '$3.$2.$1')
+    .replace(/^(\d+)-(\d+)-(\d+)$/, '$3.$2.$1');
+  const navigate = () => {
+    if(JSON.stringify(param) == "{}"){
+      route(`${id}`);
+    } else {
+      route(`posts/${id}`)
+    }
+  }
   return (
     <div className="post">
       <div className="post__title">
@@ -19,7 +27,7 @@ const Post = ({ id, title, author, date, about, img }) => {
         <div className="post__description">
           {about}
           <br /><br />
-          <button onClick={() => route(`${id}`)}>Читать далее...</button>
+          <button onClick={navigate}>Читать далее...</button>
         </div>
       </div>
       <div className="post__footer">

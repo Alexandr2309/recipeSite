@@ -26,7 +26,6 @@ const Search = () => {
   //---------- Дописать условия на поиск по тегу и в названии ----------//
   const searchPosts = (e) => {
     if (e.key === 'Enter') {
-      console.log("Отработало");
       updatePosts(posts.filter(post => post.title.toLowerCase().includes(value.toLowerCase())))
       setValue('');
     }
@@ -44,7 +43,14 @@ const Search = () => {
         onBlur={onBlur}
         onKeyDown={searchPosts}
       />
-      <button style={btnStyle} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>Поиск</button>
+      <button style={btnStyle}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={() => {
+          updatePosts(posts.filter(post => post.title.toLowerCase().includes(value.toLowerCase())))
+          setValue('');
+        }}
+      >Поиск</button>
     </div >
   )
 };

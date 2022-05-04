@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Card from '../../components/cardRecipe/Card';
 import './postPage.css'
+import { PostsContext } from '../../context/Context'
+import { useParams } from 'react-router-dom';
 
 const PostPage = () => {
-
+  const { id } = useParams();
+  const posts = useContext(PostsContext);
+  const i = posts.findIndex(post => id === post.id);
+  console.log(i)
   return (
     <div className='post__wrapper page__wrapper page'>
       <h2>Название</h2>
       <div className="page__head">
         <div className="page__img">
-          <img src='../../images/logo512.png' alt="Фото рецепта" />
+          <img src={posts[i].img} alt="Фото рецепта" />
         </div>
         <div className="page__about">
           <div className="page__portion">4 порции</div>
@@ -46,7 +51,15 @@ const PostPage = () => {
       </div>
       <div className='page__title'>Пошаговый рецепт</div>
       <div className="page__recipe">
-        <Card />
+        <Card
+          img={posts[i].img}
+        />
+        <Card
+          img={posts[i].img}
+        />
+        <Card
+          img={posts[i].img}
+        />
       </div>
     </div>
   )
