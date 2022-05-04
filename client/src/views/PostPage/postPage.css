@@ -1,0 +1,125 @@
+.page__img {
+  width: 20%;
+  float: left;
+  margin-left: 15px;
+  margin-bottom: 8px;
+  margin-right: 25px;
+  min-height: 170px;
+}
+
+.page__img img {
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.page__title {
+  margin-top: 10px;
+  font-size: 24px;
+  color: #e39915;
+  -ms-flex-item-align: start;
+      -ms-grid-row-align: start;
+      align-self: start;
+  margin-left: 27px;
+  font-weight: bold;
+  margin-bottom: -10px;
+}
+
+.page__head {
+  font-size: 17px;
+}
+
+.page__card {
+  width: 70%;
+  margin: 0px auto;
+  padding: 15px;
+}
+
+.page__card hr {
+  border-color: #e39915;
+  color: #e39915;
+  background-color: #e39915;
+}
+
+.page__img {
+  float: left;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  margin-right: 25px;
+}
+
+.page__img img {
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.page__about {
+  text-align: justify;
+  margin: 0 5px;
+  padding: 15px;
+}
+
+.page__portion::before {
+  content: "";
+  background: url("../../images/bowl-hot-solid-24.png") center/18px 18px no-repeat;
+  padding: 10px;
+  margin-right: 7px;
+}
+
+.page__time::before {
+  content: "";
+  background: url("../../images/time.png") center/18px 18px no-repeat;
+  padding: 10px;
+  margin-right: 7px;
+}
+
+.page__author::before {
+  content: "";
+  background: url("../../images/author.png") center/18px 18px no-repeat;
+  padding: 10px;
+  margin-right: 7px;
+}
+
+.page__table {
+  text-align: left;
+  float: left;
+  -ms-flex-item-align: start;
+      -ms-grid-row-align: start;
+      align-self: start;
+  width: 100%;
+  background-color: #d9e0a6;
+}
+
+.page__table table {
+  width: 60%;
+  font-size: 18px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  border-spacing: 2px;
+}
+
+.page__table table td {
+  padding: 5px;
+}
+
+.page__table table tr:last-child {
+  margin-bottom: 10px;
+}
+
+.page__table table th {
+  color: #d84c00;
+  font-size: 22px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.page__table table th span {
+  color: #8b9d52;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.page__table-colorize {
+  background: #e5eac2;
+}

@@ -4,7 +4,6 @@ import './post.css';
 
 const Post = ({ id, title, author, date, about, img }) => {
   const route = useNavigate();
-  console.log(id)
   let datenow = ("" + (new Date(date)).toISOString())
     .replace(/^([^T]+)T(.+)$/, '$1')
     .replace(/^(\d+)-(\d+)-(\d+)$/, '$3.$2.$1')

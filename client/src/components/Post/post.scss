@@ -2,9 +2,12 @@
   border: 5px solid #ece3da;
   max-width: 700px;
   margin: 20px 20px 10px;
-  & a {
+  & button {
     text-decoration: none;
     color: inherit;
+    background: none;
+    border: none;
+    font-size: 17px;
     transition: all 0.1s ease 0s;
     &:hover {
       text-decoration: underline;
@@ -30,7 +33,7 @@
 }
 .post__img {
   position: relative;
-  width: 300px;
+  width: 350px;
   margin: 15px 0 15px 15px;
   border: 1px solid #81a03c;
   height: 170px;

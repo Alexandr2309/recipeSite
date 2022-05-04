@@ -24,6 +24,7 @@ const Posts = ({ posts, sweets = false }) => {
           const { id, title, author, date, about, img } = post;
           return <Post
             key={id}
+            id={id}
             title={title}
             author={author}
             date={date}

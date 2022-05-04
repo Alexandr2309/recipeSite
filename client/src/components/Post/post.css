@@ -1,17 +1,17 @@
 .post {
-  border: 5px solid #ECE3DA;
-  max-width: 800px;
+  border: 5px solid #ece3da;
+  max-width: 700px;
   margin: 20px 20px 10px;
 }
 
 .post button {
   text-decoration: none;
-  background: none;
-  border: 0px;
-  font-size: 17px;
   color: inherit;
-  -webkit-transition: all .1s ease 0s;
-  transition: all .1s ease 0s;
+  background: none;
+  border: none;
+  font-size: 17px;
+  -webkit-transition: all 0.1s ease 0s;
+  transition: all 0.1s ease 0s;
 }
 
 .post button:hover {
@@ -24,7 +24,7 @@
 }
 
 .post__title h3 {
-  background: #ECE3DA;
+  background: #ece3da;
   border-radius: 0px 0 15px 15px;
   font-size: 24px;
   padding: 5px;
@@ -43,9 +43,9 @@
 
 .post__img {
   position: relative;
-  width: 325px;
+  width: 350px;
   margin: 15px 0 15px 15px;
-  border: 1px solid #81A03C;
+  border: 1px solid #81a03c;
   height: 170px;
   padding: 2px;
 }
@@ -69,7 +69,7 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  background: #ECE3DA;
+  background: #ece3da;
   padding: 10px;
   font-size: 16px;
 }

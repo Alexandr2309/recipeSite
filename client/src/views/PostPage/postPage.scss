@@ -1,0 +1,123 @@
+.page__img {
+  width: 20%;
+  float: left;
+  margin-left: 15px;
+  margin-bottom: 8px;
+  margin-right: 25px;
+  min-height: 170px;
+  & img {
+    width: 100%;
+    object-fit: contain;
+  }
+}
+.post {
+  &__wrapper {
+  }
+}
+.page {
+  &__title {
+    margin-top: 10px;
+    font-size: 24px;
+    color: #e39915;
+    align-self: start;
+    margin-left: 27px;
+    font-weight: bold;
+    margin-bottom: -10px;
+  }
+  &__wrapper {
+  }
+  &__head {
+    font-size: 17px;
+  }
+  &__card {
+    width: 70%;
+    margin: 0px auto;
+    padding: 15px;
+    & hr {
+      border-color: #e39915;
+      color: #e39915;
+      background-color: #e39915;
+    }
+  }
+  &__img {
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    margin-right: 25px;
+    & img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+  &__description {
+  }
+
+  &__about {
+    text-align: justify;
+    margin: 0 5px;
+    padding: 15px;
+  }
+
+  &__portion {
+    &::before {
+      content: "";
+      background: url("../../images/bowl-hot-solid-24.png") center/ 18px 18px no-repeat;
+      padding: 10px;
+      margin-right: 7px;
+    }
+  }
+  &__time {
+    &::before {
+      content: "";
+      background: url("../../images/time.png") center/ 18px 18px no-repeat;
+      padding: 10px;
+      margin-right: 7px;
+    }
+  }
+
+  &__author {
+    &::before {
+      content: "";
+      background: url("../../images/author.png") center/ 18px 18px no-repeat;
+      padding: 10px;
+      margin-right: 7px;
+    }
+  }
+
+  &__about-text {
+  }
+  &__table {
+    text-align: left;
+    float: left;
+    align-self: start;
+    width: 100%;
+    background-color: #d9e0a6;
+    & table {
+      width: 60%;
+      font-size: 18px;
+      margin-left: 20px;
+      margin-bottom: 10px;
+      border-spacing: 2px;
+      & td {
+        padding: 5px;
+      }
+      & tr:last-child {
+        margin-bottom: 10px;
+      }
+      & th {
+        & span {
+          color: #8b9d52;
+          font-weight: normal;
+          font-size: 16px;
+        }
+        color: #d84c00;
+        font-size: 22px;
+        font-weight: bold;
+        font-style: italic;
+      }
+    }
+    &-colorize {
+      background: #e5eac2;
+    }
+  }
+}
