@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://user:12345@recipies.4gtwq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
   dbName: 'Recipies',
@@ -8,4 +8,4 @@ mongoose.connect('mongodb+srv://user:12345@recipies.4gtwq.mongodb.net/myFirstDat
   console.log('Connected to yourDB-name database'));
 
 const db = mongoose.connection
-export default db;
+module.exports = db;
