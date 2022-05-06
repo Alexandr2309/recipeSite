@@ -21,7 +21,7 @@ form {
 .field {
   text-align: center;
 }
-input[name="save"] {
+button[name="save"] {
   margin: 10px 0;
   padding: 0px 36px;
   color: #ffffff;
@@ -37,7 +37,7 @@ input[name="save"] {
   outline: none;
   transition: all 0.4s ease;
 }
-input[name="save"]:hover {
+button[name="save"]:hover {
   box-shadow: 0px 0px 10px rgba(44, 203, 223, 0.6);
 }
 form ul {
@@ -82,9 +82,8 @@ form ul {
 }
 .tags span {
   word-wrap: break-word;
-  
 }
-.tags  a {
+.tags a {
   position: absolute;
   top: 4px;
   right: 3px;
@@ -101,25 +100,28 @@ form ul {
   float: left;
   list-style: none;
 }
-input[type=checkbox], input[type=radio] {display: none;}
-
-input[type=checkbox] + label:after {
-    content: "\2714";
-    color: transparent;
-    display: inline-block;
-    border: 1px solid #ccc;
-    font-size: 20px;
-    font-weight: 900;
-    line-height: 18px;
-    margin: 0px 0px 0 5px;
-    height: 20px;
-    width: 20px;
-    text-align: center;
-    vertical-align: middle;
-    transition: color ease .3s;
+input[type="checkbox"],
+input[type="radio"] {
+  display: none;
 }
 
-input[type=checkbox]:checked + label:after {
-    color: #000;
+input[type="checkbox"] + label:after {
+  content: "\2714";
+  color: transparent;
+  display: inline-block;
+  border: 1px solid #ccc;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 18px;
+  margin: 0px 0px 0 5px;
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  vertical-align: middle;
+  transition: color ease 0.3s;
+}
+
+input[type="checkbox"]:checked + label:after {
+  color: #000;
   border-color: #000;
 }

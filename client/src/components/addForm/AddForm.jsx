@@ -25,12 +25,13 @@ const AddForm = () => {
     e.preventDefault();
     setTags(tags.filter((tag, i) => tag !== e.target.dataset.text));
   }
-  function handlerSumbit(e) {
+  async function handlerSumbit(e) {
     e.preventDefault();
-
+    const { title, anonce, ingridients, portions, sweets, author, description } = data;
+    
   }
   return (
-    <form onSubmit={e => e.preventDefault()} noValidate>
+    <form noValidate>
       <label htmlFor="recipes_title">Название блюда *:</label>
       <p><input type="text" id="recipes_title"
         value={data.title}
@@ -119,7 +120,7 @@ const AddForm = () => {
       <label htmlFor="recipes_spent">Вы потратили времени* :</label>
       <p><input type="text" id="recipes_spent" name="recipes_spent" size={5} required /> мин</p>
       <div className="field">
-        <input type="submit" id="" name="save" value="Сохранить" onSubmit={handlerSumbit} />
+        <button type="submit" id="" name="save" onClick={handlerSumbit} >Cохранить</button>
       </div>
     </form>
   )
