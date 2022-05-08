@@ -10,6 +10,8 @@ const Recipe = new Schema(
     portions: { type: Number, required: true },
     sweets: { type: Boolean, required: true },
     author: { type: String, required: true },
+    img: { type: Array, required: true },
+    tags: { type: String, required: true },
   },
   { timestamps: true },
 );

@@ -8,7 +8,6 @@ const PostPage = () => {
   const { id } = useParams();
   const posts = useContext(PostsContext);
   const i = posts.findIndex(post => id === post.id);
-  console.log(i)
   return (
     <div className='post__wrapper page__wrapper page'>
       <h2>Название</h2>

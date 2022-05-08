@@ -11,7 +11,7 @@ import api from './api/index'
 
 function App() {
   const [posts, setPosts] = useState([
-    { id: useId(), title: 'Первое', author: "Коломыцкий А.М", date: Date.now() - 100000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: require('./images/logo512.png'), sweets: false },
+    { id: useId(), title: 'Первое', author: "Коломыцкий А.М", date: Date.now() - 10, createdAt: Date.now() - 100000, updatedAt: Date.now() - 10000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: require('./images/logo512.png'), sweets: false },
     { id: useId(), title: 'Второе', author: "Коломыцкая Л.В", date: Date.now() - 10, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: require('./images/logo512.png'), sweets: false },
     { id: useId(), title: 'Третье', author: "Джиба С.Е", date: Date.now() - 150000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: require('./images/logo512.png'), sweets: false },
     { id: useId(), title: 'Пироженное', author: "Джиба С.Е", date: Date.now() - 150000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: require('./images/logo512.png'), sweets: true }
@@ -33,10 +33,10 @@ function App() {
     })
   }
 
-  useEffect(() => {
-    componentDidMount();
-    updatePosts([...posts]);
-  }, [])
+  // useEffect(() => {
+  //   componentDidMount();
+  //   updatePosts([...posts]);
+  // }, [])
 
 
   return (
@@ -46,10 +46,10 @@ function App() {
         <BrowserRouter>
           <Burger />
           <Routes>
-            <Route element={<All />} path='/recipe'></Route>
+            <Route element={<All />} path='/recipe/list'></Route>
             <Route element={<Form />} path='/recipe/create'></Route>
             <Route element={<Sweets />} path='/recipe/sweets'></Route>
-            <Route element={<PostPage />} path='/recipe/:id'></Route>
+            <Route element={<PostPage />} path='/recipe/list/:id'></Route>
             <Route element={<All />} path='*'></Route>
           </Routes>
         </BrowserRouter></NowPosts.Provider>

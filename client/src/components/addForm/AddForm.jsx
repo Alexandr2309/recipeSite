@@ -1,37 +1,79 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { LZW } from '../../utils/LZW';
 import './addForm.css';
+import api from './../../api/index';
+// import jsesc from 'jsesc'
+const jsesc = require('jsesc')
 
 const AddForm = () => {
-  const [tags, setTags] = useState([]);
+  const ref = useRef(null)
+
+  const [tagsNow, setTags] = useState([]);
   const [value, setValue] = useState('');
   const [data, setData] = useState({
     title: '',
     anonce: '',
-    ingredients: [],
+    description: '',
+    ingredients: '',
     portions: 0,
-    // tags: [],
     sweets: false,
     author: '',
-    description: ''
+    img: new ArrayBuffer(),
+    tags: '',
   })
 
-  function addTags(e) {
+  async function addTags(e) {
     if (e.key === 'Enter') {
-      setTags([...tags, value]);
+      setTags([...tagsNow, value]);
       setValue('');
+      setData({ ...data, tags: tagsNow.toString() })
     }
   }
-  const deleteTag = e => {
+  const deleteTag = async e => {
     e.preventDefault();
-    setTags(tags.filter((tag, i) => tag !== e.target.dataset.text));
+    setTags(tagsNow.filter((tag, i) => tag !== e.target.dataset.text));
+  }
+  const convertImg = async () => {
+    const file = ref.current.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      console.log(reader.result)
+      const res = new Uint8Array(reader.result);
+      setData({ ...data, img: [res] });
+    };
+
+    reader.readAsArrayBuffer(file);
   }
   async function handlerSumbit(e) {
     e.preventDefault();
-    const { title, anonce, ingridients, portions, sweets, author, description } = data;
-    
+    const ins = { ...data };
+    await api.insertRecipe(ins).then(res => {
+      alert('Рецепт успешно добавлен!');
+      setData({
+        title: '',
+        anonce: '',
+        description: '',
+        ingredients: '',
+        portions: 0,
+        sweets: false,
+        author: '',
+        img: new ArrayBuffer(),
+        tags: '',
+      })
+    })
+  };
+  const dontFetch = (e) => {
+    if (e.code == 'Enter') {
+      e.preventDefault();
+      return;
+    }
   }
   return (
-    <form noValidate>
+    <form onKeyDown={dontFetch} noValidate>
       <label htmlFor="recipes_title">Название блюда *:</label>
       <p><input type="text" id="recipes_title"
         value={data.title}
@@ -41,19 +83,21 @@ const AddForm = () => {
       <label htmlFor="recipes_photo">Фото готового блюда:</label>
       <p><input type="file"
         id="recipes_photo"
-        name="recipes_photo" /></p>
+        name="recipes_photo"
+        ref={ref}
+        onChange={convertImg} /></p>
       <p className='comment'>Если у вас нет готового фото, пропустите этот рецепт</p>
       <label htmlFor="recipes_anonce">Краткое описание блюда*:</label>
       <p><input type="text"
         value={data.anonce}
-        onChange={e => setData({ ...data, anonce: e.target.value })}
+        onChange={async e => setData({ ...data, anonce: e.target.value })}
         id="recipes_anonce"
         name="recipes_anonce" size={120} required /></p>
       <p className="comment">1-2 предложения для отображения в на общей стратнице рецпотов</p>
       <label htmlFor="recipes_description">Текстовое описание* :</label>
       <p><textarea id="recipes_description"
         value={data.description}
-        onChange={e => setData({ ...data, description: e.target.value })}
+        onChange={async e => setData({ ...data, description: e.target.value })}
         name="recipes_description"
         required
         cols={40} rows={10} /></p>
@@ -64,7 +108,7 @@ const AddForm = () => {
       <label htmlFor="recipes_ingrid">Ингридиенты* :</label>
       <p><textarea id="recipes_ingrid"
         value={data.ingredients}
-        onChange={e => setData({ ...data, ingredients: e.target.value })}
+        onChange={async e => setData({ ...data, ingredients: e.target.value })}
         name="recipes_ingrid"
         required
         cols={40} rows={10} /></p>
@@ -72,14 +116,14 @@ const AddForm = () => {
       <label htmlFor="recipes_portion">Количество порций* :</label>
       <p><input type="text"
         value={data.portions}
-        onChange={e => setData({ ...data, portions: +e.target.value.trim() })}
+        onChange={async e => setData({ ...data, portions: +e.target.value.trim() })}
         id="recipes_portion"
         name="recipes_portion"
         size={5} required /></p>
       <div className="">
         <input type="checkbox"
           checked={data.sweets}
-          onChange={e => setData({ ...data, sweets: e.target.checked })}
+          onChange={async e => setData({ ...data, sweets: e.target.checked })}
           id="recipes_sweet"
           name="recipes_sweet"
           required />
@@ -89,12 +133,12 @@ const AddForm = () => {
       <label htmlFor="recipes_tags" className='recipes_tags'>Теги* :</label>
       <p><input type="text" id="recipes_tags" name="recipes_tags" size={32} required
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={async e => setValue(e.target.value)}
         onKeyDown={addTags}
       /></p>
-      {tags.length
+      {tagsNow.length
         ? <div className="tags__container" style={{ width: 250 }}>
-          <ul> {tags.map((tag, i) => {
+          <ul> {tagsNow.map((tag, i) => {
             return <li key={i} className='tags'>
               <span key={i + 'text'}>{tag}</span>
               <a key={i + 'link'} href="#" onClick={deleteTag} data-text={tag}></a>

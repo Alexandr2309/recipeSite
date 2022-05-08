@@ -77,7 +77,7 @@ deleteRecipe = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Рецепт не найден' })
     }
     return res.status(200).json({ success: true, data: recipe })
-  }).catch(err => console.log(err));
+  })
 }
 
 getRecipes = async (req, res) => {
@@ -92,7 +92,7 @@ getRecipes = async (req, res) => {
       })
     };
     return res.status(200).json({success: true, data: recipes})
-  }).catch(err => console.log(err))
+  })
 }
 
 getRecipeById = async (req, res) => {
@@ -104,7 +104,7 @@ getRecipeById = async (req, res) => {
       return res.status(404).json({ success: false, error: 'Рецепт не найден' })
     }
     return res.status(200).json({ success: true, data: recipe })
-  }).catch(err => console.log(err))
+  })
 }
 
 module.exports = {
