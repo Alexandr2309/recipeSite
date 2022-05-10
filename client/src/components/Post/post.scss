@@ -1,6 +1,6 @@
 .post {
   border: 5px solid #ece3da;
-  max-width: 700px;
+  width: 675px;
   margin: 20px 20px 10px;
   & button {
     text-decoration: none;
@@ -33,14 +33,15 @@
 }
 .post__img {
   position: relative;
-  width: 350px;
+  width: 210px;
   margin: 15px 0 15px 15px;
   border: 1px solid #81a03c;
   height: 170px;
   padding: 2px;
   & img {
     height: 100%;
-    width: auto;
+    width: 100%;
+    // object-fit: cover; 
   }
 }
 .post__description {
@@ -57,6 +58,7 @@
   font-size: 16px;
 }
 .post__author {
+  margin-right: auto;
 }
 .post__data {
 }

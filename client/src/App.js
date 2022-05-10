@@ -1,4 +1,4 @@
-import { useId, useMemo, useState, useEffect } from 'react';
+import { useId, useMemo, useState, useEffect, useContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Burger from './components/burger/burger';
@@ -10,12 +10,7 @@ import PostPage from './views/PostPage/PostPage';
 import api from './api/index'
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: useId(), title: 'Первое', author: "Коломыцкий А.М", date: Date.now() - 10, createdAt: Date.now() - 100000, updatedAt: Date.now() - 10000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: require('./images/logo512.png'), sweets: false },
-    { id: useId(), title: 'Второе', author: "Коломыцкая Л.В", date: Date.now() - 10, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: require('./images/logo512.png'), sweets: false },
-    { id: useId(), title: 'Третье', author: "Джиба С.Е", date: Date.now() - 150000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: require('./images/logo512.png'), sweets: false },
-    { id: useId(), title: 'Пироженное', author: "Джиба С.Е", date: Date.now() - 150000, about: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit ratione consequuntur neque quibusdam, sapiente reiciendis.', img: require('./images/logo512.png'), sweets: true }
-  ]);
+  const [posts, setPosts] = useState('')
   const [nowPosts, updatePosts] = useState([])
   const [state, setState] = useState(false);
 
@@ -27,16 +22,15 @@ function App() {
     setState(true);
 
     await api.getAllRecipes().then(recipes => {
-      console.log(recipes)
-      setPosts([...recipes.data.data]);
-      setState(false);
+      console.log(recipes.data.data);
+      setPosts(recipes.data.data);
+      updatePosts([...posts])
     })
   }
 
-  // useEffect(() => {
-  //   componentDidMount();
-  //   updatePosts([...posts]);
-  // }, [])
+  useEffect(() => {
+    componentDidMount()
+  }, [])
 
 
   return (

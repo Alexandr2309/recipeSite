@@ -1,17 +1,16 @@
 .page__img {
-  width: 20%;
   float: left;
+  height: 170px;
   margin-left: 15px;
   margin-bottom: 8px;
   margin-right: 25px;
   border: 1px solid #81a03c;
-  padding: 2px;
+  padding: 1px;
 }
 
 .page__img img {
-  width: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
+  width: auto;
+  height: 100%;
 }
 
 .page__title {
@@ -28,6 +27,8 @@
 
 .page__head {
   font-size: 17px;
+  width: 100%;
+  margin-left: 100px;
 }
 
 .page__card {
@@ -58,8 +59,12 @@
 .page__about {
   text-align: justify;
   margin: 0 5px;
-  padding: 15px;
-  padding-top: 6px;
+  padding: 20px;
+  padding-top: 10px;
+}
+
+.page__portion {
+  margin: 5px 0;
 }
 
 .page__portion::before {
@@ -69,11 +74,19 @@
   margin-right: 7px;
 }
 
+.page__time {
+  margin: 5px 0;
+}
+
 .page__time::before {
   content: "";
   background: url("../../images/time.png") center/18px 18px no-repeat;
   padding: 10px;
   margin-right: 7px;
+}
+
+.page__author {
+  margin: 5px 0;
 }
 
 .page__author::before {

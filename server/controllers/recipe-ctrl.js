@@ -1,4 +1,6 @@
 const Recipe = require('../models/recipe-model');
+const fs = require('fs');
+const config = require('../config/default.json');
 
 createRecipe = (req, res) => {
   const body = req.body;
@@ -18,7 +20,7 @@ createRecipe = (req, res) => {
 
   recipe
     .save()
-    .then(() => {
+    .then((result) => {
       res.status(201).json({
         success: true,
         id: recipe._id,
@@ -26,7 +28,6 @@ createRecipe = (req, res) => {
       })
     })
 };
-
 updateRecipe = async (req, res) => {
   const body = req.body;
 
@@ -79,7 +80,6 @@ deleteRecipe = async (req, res) => {
     return res.status(200).json({ success: true, data: recipe })
   })
 }
-
 getRecipes = async (req, res) => {
   await Recipe.find({}).exec((err, recipes) => {
     if (err) {
@@ -91,12 +91,11 @@ getRecipes = async (req, res) => {
         error: 'Рецепты не найдены'
       })
     };
-    return res.status(200).json({success: true, data: recipes})
+    return res.status(200).json({ success: true, data: recipes })
   })
 }
-
 getRecipeById = async (req, res) => {
-  await Recipe.findOne({_id: req.params.id}).exec((err, recipe) => {
+  await Recipe.findOne({ _id: req.params.id }).exec((err, recipe) => {
     if (err) {
       return res.status(400).json({ success: false, error: err })
     }
@@ -106,6 +105,42 @@ getRecipeById = async (req, res) => {
     return res.status(200).json({ success: true, data: recipe })
   })
 }
+getRecipeImg = async (req, res) => {
+  try {
+    const path = req.query.path;
+    console.log(path, req.query) 
+    if (fs.existsSync(path)) {
+      console.log('Нашёлся - ', path);
+      return res.download(path, path.name);
+    }
+    return res.status(400).json({ message: 'Download error' })
+  } catch (error) {
+    return res.status(404).json({ success: false, error: error })
+  }
+}
+uploadRecipeImg = async (req, res) => {
+  try {
+    const file = req.files.file;
+    const path = config.filePath + Date.now() + file.name;
+    await fs.writeFile(path, file.data, err => err ? console.log(err) : 0);
+    res.send(path)
+  } catch (error) {
+    return res.status(400).json({ success: false, error })
+  }
+}
+// createAndConvertImg = (req, res) => {
+//   let data = Buffer.from('');
+
+//   req.on('data', (chunk) => {
+//     data = Buffer.concat([data, chunk]);
+//   });
+//   req.on('end', () => {
+//     res.send({
+//       headers: req.headers,
+//       data
+//     });
+//   });
+// }
 
 module.exports = {
   createRecipe,
@@ -113,4 +148,6 @@ module.exports = {
   deleteRecipe,
   getRecipes,
   getRecipeById,
+  getRecipeImg,
+  uploadRecipeImg
 }

@@ -5,10 +5,10 @@ import { PostsContext, NowPosts } from './../../context/Context';
 
 const Sweets = () => {
   const posts = useContext(PostsContext);
+  const { nowPosts, updatePosts } = useContext(NowPosts)
   useEffect(() => {
     updatePosts([...posts])
   }, [])
-  const { nowPosts, updatePosts } = useContext(NowPosts)
   return (
     <div className="App">
       <Posts posts={nowPosts} sweets={true} />

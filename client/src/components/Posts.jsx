@@ -10,27 +10,29 @@ const Posts = ({ posts, sweets = false }) => {
       {sweets
         ? posts.filter(post => post.sweets)
           .map(post => {
-            const { id, title, author, date, about, img } = post;
+            const { _id, title, author, anonce, img, updatedAt } = post;
             return <Post
-              key={id}
-              id={id}
+              key={_id}
+              _id={_id}
               title={title}
               author={author}
-              date={date}
-              about={about}
-              img={img} />
+              anonce={anonce}
+              img={img}
+              updatedAt={updatedAt}
+            />
           })
         : posts.filter(post => !post.sweets)
           .map(post => {
-            const { id, title, author, date, about, img } = post;
+            const { _id, title, author, anonce, img, updatedAt } = post;
             return <Post
-              key={id}
-              id={id}
+              key={_id}
+              _id={_id}
               title={title}
               author={author}
-              date={date}
-              about={about}
-              img={img} />
+              anonce={anonce}
+              img={img}
+              updatedAt={updatedAt}
+            />
           })
       }
     </div>

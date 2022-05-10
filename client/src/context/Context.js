@@ -1,7 +1,14 @@
 import { createContext } from 'react';
+import api from '../api/index'
 
-export const PostsContext = createContext(null);
+const componentDidMount = async () => {
+  return await api.getAllRecipes().then(recipes => {
+    return recipes.data.data
+  });
+}
+const posts = componentDidMount()
+export const PostsContext = createContext(posts);
 export const NowPosts = createContext({
-  nowPosts: null,
+  nowPosts: posts,
   updatePosts: () => { }
 });

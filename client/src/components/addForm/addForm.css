@@ -104,7 +104,9 @@ input[type="checkbox"],
 input[type="radio"] {
   display: none;
 }
-
+textarea {
+  white-space: pre-line
+}
 input[type="checkbox"] + label:after {
   content: "\2714";
   color: transparent;

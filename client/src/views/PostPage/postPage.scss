@@ -1,14 +1,16 @@
 .page__img {
-  width: 20%;
+  // max-width: 225px;
   float: left;
+  height: 170px;
   margin-left: 15px;
   margin-bottom: 8px;
   margin-right: 25px;
   border: 1px solid #81a03c;
-  padding: 2px;
+  padding: 1px;
   & img {
-    width: 100%;
-    object-fit: contain;
+    width: auto;
+    height: 100%;
+    // max-width: 225px;
   }
 }
 .post {
@@ -29,6 +31,8 @@
   }
   &__head {
     font-size: 17px;
+    width: 100%;
+    margin-left: 100px;
   }
   &__card {
     width: 70%;
@@ -56,11 +60,12 @@
   &__about {
     text-align: justify;
     margin: 0 5px;
-    padding: 15px;
-    padding-top: 6px;
+    padding: 20px;
+    padding-top: 10px;
   }
 
   &__portion {
+    margin: 5px 0;
     &::before {
       content: "";
       background: url("../../images/bowl-hot-solid-24.png") center/ 18px 18px no-repeat;
@@ -69,6 +74,7 @@
     }
   }
   &__time {
+    margin: 5px 0;
     &::before {
       content: "";
       background: url("../../images/time.png") center/ 18px 18px no-repeat;
@@ -78,6 +84,7 @@
   }
 
   &__author {
+    margin: 5px 0;
     &::before {
       content: "";
       background: url("../../images/author.png") center/ 18px 18px no-repeat;

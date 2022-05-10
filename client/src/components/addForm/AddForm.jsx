@@ -1,55 +1,42 @@
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { LZW } from '../../utils/LZW';
-import './addForm.css';
 import api from './../../api/index';
-// import jsesc from 'jsesc'
-const jsesc = require('jsesc')
+import './addForm.css';
 
 const AddForm = () => {
   const ref = useRef(null)
 
+  const [ingrids, setIngrids] = useState('');
+  const [isReady, setIsReady] = useState(false);
   const [tagsNow, setTags] = useState([]);
   const [value, setValue] = useState('');
   const [data, setData] = useState({
     title: '',
     anonce: '',
     description: '',
-    ingredients: '',
+    ingredients: {},
     portions: 0,
     sweets: false,
     author: '',
-    img: new ArrayBuffer(),
+    img: '',
     tags: '',
-  })
+    tookTime: 0,
+    spentTime: 0,
+  });
 
+  function printTextarea(field, isData = false, dataField) {
+    if (field.key === 'Enter') {
+      setIngrids(ingrids + '\n')
+    }
+  }
   async function addTags(e) {
     if (e.key === 'Enter') {
       setTags([...tagsNow, value]);
       setValue('');
-      setData({ ...data, tags: tagsNow.toString() })
     }
   }
-  const deleteTag = async e => {
-    e.preventDefault();
-    setTags(tagsNow.filter((tag, i) => tag !== e.target.dataset.text));
-  }
-  const convertImg = async () => {
-    const file = ref.current.files[0];
-
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      console.log(reader.result)
-      const res = new Uint8Array(reader.result);
-      setData({ ...data, img: [res] });
-    };
-
-    reader.readAsArrayBuffer(file);
-  }
-  async function handlerSumbit(e) {
-    e.preventDefault();
+  async function handlerSumbit() {
+    console.log(data)
     const ins = { ...data };
     await api.insertRecipe(ins).then(res => {
       alert('Рецепт успешно добавлен!');
@@ -61,11 +48,57 @@ const AddForm = () => {
         portions: 0,
         sweets: false,
         author: '',
-        img: new ArrayBuffer(),
+        img: '',
         tags: '',
-      })
+        tookTime: 0,
+        spentTime: 0,
+      });
+      setTags([]);
     })
   };
+  useEffect(() => {
+    setData({ ...data, tags: tagsNow })
+  }, [tagsNow]);
+  useEffect(() => {
+    if (isReady) {
+      handlerSumbit()
+    }
+  }, [isReady])
+  const deleteTag = async e => {
+    e.preventDefault();
+    setTags(tagsNow.filter((tag, i) => tag !== e.target.dataset.text));
+  }
+  const sendImg = async () => {
+    if (!ref.current.files[0]) return;
+    try {
+      const formData = new FormData();
+      formData.append('file', ref.current.files[0]);
+      await axios.post('http://localhost:3000/api/recipe-img', formData).then(async (res) => {
+        console.log(res);
+        setData({ ...data, img: res.data });
+        console.log(res.data)
+      })
+        .catch((err) => ("Error occured", err));
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const addIngred = (e) => {
+    e.preventDefault();
+    const test = ingrids.split('\n');
+    const obj = {};
+    test.forEach(elem => {
+      if (!elem.includes('-') || !elem) return;
+      const now = elem.split('-');
+      console.log(now)
+      let [product, count] = now;
+      product = product.trim();
+      count = count.trim();
+      obj[product] = count;
+    });
+    setData({ ...data, ingredients: { ...obj } });
+    setIsReady(true);
+  }
   const dontFetch = (e) => {
     if (e.code == 'Enter') {
       e.preventDefault();
@@ -73,7 +106,7 @@ const AddForm = () => {
     }
   }
   return (
-    <form onKeyDown={dontFetch} noValidate>
+    <form onKeyDown={dontFetch} noValidate encType="multipart/form-data">
       <label htmlFor="recipes_title">Название блюда *:</label>
       <p><input type="text" id="recipes_title"
         value={data.title}
@@ -85,8 +118,8 @@ const AddForm = () => {
         id="recipes_photo"
         name="recipes_photo"
         ref={ref}
-        onChange={convertImg} /></p>
-      <p className='comment'>Если у вас нет готового фото, пропустите этот рецепт</p>
+        onChange={sendImg} /> </p>
+      <p className='comment'>Если у вас нет готового фото, пропустите этот шаг</p>
       <label htmlFor="recipes_anonce">Краткое описание блюда*:</label>
       <p><input type="text"
         value={data.anonce}
@@ -102,21 +135,22 @@ const AddForm = () => {
         required
         cols={40} rows={10} /></p>
       <p className="comment">Полное описание блюда</p>
-      <label htmlFor="recipes_photo_desc">Пошаговое описание(фотографии):</label>
+      {/* <label htmlFor="recipes_photo_desc">Пошаговое описание(фотографии):</label>
       <p><input type="file" id="recipes_photo_desc" name="recipes_photo_desc" /></p>
-      <p className='comment'>Если у Вас есть пошаговые фото процесса приготовления, добавьте их здесь. Вы можете одновременно выбрать несколько файлов для добавления, для этого нажмите на необходимых файлах удерживая кнопку "Ctrl" на клавиатуре.</p>
+      <p className='comment'>Если у Вас есть пошаговые фото процесса приготовления, добавьте их здесь. Вы можете одновременно выбрать несколько файлов для добавления, для этого нажмите на необходимых файлах удерживая кнопку "Ctrl" на клавиатуре.</p> */}
       <label htmlFor="recipes_ingrid">Ингридиенты* :</label>
       <p><textarea id="recipes_ingrid"
-        value={data.ingredients}
-        onChange={async e => setData({ ...data, ingredients: e.target.value })}
+        value={ingrids}
+        onChange={e => setIngrids(e.target.value)}
+        onKeyDown={e => printTextarea.call(null, e)}
         name="recipes_ingrid"
         required
         cols={40} rows={10} /></p>
-      <p className="comment">Полное описание блюда</p>
+      <p className="comment">Пишите каждый новый ингридиент с новой строки, в формате "Название продука - Количество(ед.измерения)</p>
       <label htmlFor="recipes_portion">Количество порций* :</label>
       <p><input type="text"
         value={data.portions}
-        onChange={async e => setData({ ...data, portions: +e.target.value.trim() })}
+        onChange={async e => setData({ ...data, portions: +e.target.value })}
         id="recipes_portion"
         name="recipes_portion"
         size={5} required /></p>
@@ -160,11 +194,19 @@ const AddForm = () => {
         <option value="Людмила Владимировна К.">Людмила Владимировна К.</option>
       </select></p>
       <label htmlFor="recipes_ready">Было готово за* :</label>
-      <p><input type="text" id="recipes_ready" name="recipes_ready" size={5} required /> мин</p>
+      <p><input type="text" id="recipes_ready"
+        value={data.tookTime}
+        onChange={e => setData({ ...data, tookTime: +e.target.value })}
+        name="recipes_ready"
+        size={5} required /> мин</p>
       <label htmlFor="recipes_spent">Вы потратили времени* :</label>
-      <p><input type="text" id="recipes_spent" name="recipes_spent" size={5} required /> мин</p>
+      <p><input type="text" id="recipes_spent"
+        value={data.spentTime}
+        onChange={e => setData({ ...data, spentTime: +e.target.value })}
+        name="recipes_spent"
+        size={5} required /> мин</p>
       <div className="field">
-        <button type="submit" id="" name="save" onClick={handlerSumbit} >Cохранить</button>
+        <button type="submit" id="" name="save" onClick={addIngred} >Cохранить</button>
       </div>
     </form>
   )

@@ -1,18 +1,27 @@
-import React from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { dateParse } from '../../utils/dateParse'
 import './post.css';
 
-const Post = ({ id, title, author, date, about, img }) => {
+const Post = ({ _id, title, anonce, author, img, updatedAt }) => {
   const route = useNavigate();
+  const [imageSrc, setImageSrc] = useState('')
   const param = useParams();
-  let datenow = ("" + (new Date(date)).toISOString())
-    .replace(/^([^T]+)T(.+)$/, '$1')
-    .replace(/^(\d+)-(\d+)-(\d+)$/, '$3.$2.$1');
+  const fetchData = async () => {
+    const response = await fetch(`http://localhost:3000/api/recipe-download?path=${img}`);
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob);
+    setImageSrc(url);
+  };
+  useEffect(() => {
+    fetchData();
+  }, [])
+
   const navigate = () => {
-    if(JSON.stringify(param) == "{}"){
-      route(`${id}`);
+    if (JSON.stringify(param) == "{}") {
+      route(`${_id}`);
     } else {
-      route(`posts/${id}`)
+      route(`posts/${_id}`)
     }
   }
   return (
@@ -22,10 +31,10 @@ const Post = ({ id, title, author, date, about, img }) => {
       </div>
       <div className="post__block">
         <div className="post__img">
-          <img src={img} alt="Фото рецепта" />
+          <img src={imageSrc} alt="Фото рецепта" />
         </div>
         <div className="post__description">
-          {about}
+          {anonce}
           <br /><br />
           <button onClick={navigate}>Читать далее...</button>
         </div>
@@ -35,7 +44,7 @@ const Post = ({ id, title, author, date, about, img }) => {
           Добавил(a): {author}
         </div>
         <div className="post__data">
-          Последнее изменение - {datenow}
+          {dateParse(updatedAt)}
         </div>
       </div>
     </div>
