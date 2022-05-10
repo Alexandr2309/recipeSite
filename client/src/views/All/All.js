@@ -10,8 +10,7 @@ function All() {
   const { nowPosts, updatePosts } = useContext(NowPosts)
   useEffect(() => {
     updatePosts([...posts]);
-    console.log(nowPosts)
-  }, [posts, ])
+  }, [posts,])
   return (
     <div className="App">
       {nowPosts.length

@@ -26,9 +26,25 @@ const Search = () => {
   //---------- Дописать условия на поиск по тегу и в названии ----------//
   const searchPosts = (e) => {
     if (e.key === 'Enter') {
-      updatePosts(posts.filter(post => post.title.toLowerCase().includes(value.toLowerCase())))
+      if (!value) updatePosts([...posts])
+      updatePosts(posts.filter(post => {
+        const isInclude = post.title.toLowerCase().includes(value.toLowerCase()) ||
+          post.tags.some(tag => tag.toLowerCase().includes(value.toLowerCase()));
+        if (isInclude) return post;
+        else return false;
+      }));
       setValue('');
     }
+  };
+  const serchPostsBtn = e => {
+    if (!value) updatePosts([...posts])
+    updatePosts(posts.filter(post => {
+      const isInclude = post.title.toLowerCase().includes(value.toLowerCase()) ||
+        post.tags.some(tag => tag.toLowerCase().includes(value.toLowerCase()));
+      if (isInclude) return post;
+      else return false;
+    }));
+    setValue('');
   }
 
   return (
@@ -46,11 +62,8 @@ const Search = () => {
       <button style={btnStyle}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        onClick={() => {
-          updatePosts(posts.filter(post => post.title.toLowerCase().includes(value.toLowerCase())))
-          setValue('');
-        }}
-      >Поиск</button>
+        onClick={serchPostsBtn}>
+        Поиск</button>
     </div >
   )
 };

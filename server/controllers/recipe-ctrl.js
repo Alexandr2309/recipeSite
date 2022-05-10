@@ -128,20 +128,6 @@ uploadRecipeImg = async (req, res) => {
     return res.status(400).json({ success: false, error })
   }
 }
-// createAndConvertImg = (req, res) => {
-//   let data = Buffer.from('');
-
-//   req.on('data', (chunk) => {
-//     data = Buffer.concat([data, chunk]);
-//   });
-//   req.on('end', () => {
-//     res.send({
-//       headers: req.headers,
-//       data
-//     });
-//   });
-// }
-
 module.exports = {
   createRecipe,
   updateRecipe,

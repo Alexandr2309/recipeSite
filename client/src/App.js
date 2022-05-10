@@ -8,6 +8,7 @@ import Sweets from './views/forAnya/Sweets';
 import Form from './views/Form/Form';
 import PostPage from './views/PostPage/PostPage';
 import api from './api/index'
+import FormEdit from './views/EditPage/FormEdit';
 
 function App() {
   const [posts, setPosts] = useState('')
@@ -43,6 +44,7 @@ function App() {
             <Route element={<Form />} path='/recipe/create'></Route>
             <Route element={<Sweets />} path='/recipe/sweets'></Route>
             <Route element={<PostPage />} path='/recipe/list/:id'></Route>
+            <Route element={<FormEdit />} path='/recipe/edit/:id'></Route>
             <Route element={<All />} path='*'></Route>
           </Routes>
         </BrowserRouter></NowPosts.Provider>

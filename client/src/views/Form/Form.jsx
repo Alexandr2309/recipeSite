@@ -1,6 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import AddForm from '../../components/addForm/AddForm';
-import Burger from '../../components/burger/burger';
 
 const Form = () => {
   return (

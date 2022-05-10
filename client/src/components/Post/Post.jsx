@@ -19,8 +19,8 @@ const Post = ({ _id, title, anonce, author, img, updatedAt }) => {
   }, [])
 
   const navigate = () => {
-      route(`../recipe/list/${_id}`)
-    }
+    route(`../recipe/list/${_id}`)
+  }
   return (
     <div className="post">
       <div className="post__title">
