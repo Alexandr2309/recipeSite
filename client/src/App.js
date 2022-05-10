@@ -22,7 +22,6 @@ function App() {
     setState(true);
 
     await api.getAllRecipes().then(recipes => {
-      console.log(recipes.data.data);
       setPosts(recipes.data.data);
       updatePosts([...posts])
     })

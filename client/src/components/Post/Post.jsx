@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useResolvedPath, useSearchParams } from 'react-router-dom';
 import { dateParse } from '../../utils/dateParse'
 import './post.css';
 
 const Post = ({ _id, title, anonce, author, img, updatedAt }) => {
   const route = useNavigate();
   const [imageSrc, setImageSrc] = useState('')
-  const param = useParams();
+  const [param, setParam] = useSearchParams();
+  const location = useLocation();
   const fetchData = async () => {
     const response = await fetch(`http://localhost:3000/api/recipe-download?path=${img}`);
     const blob = await response.blob()
@@ -18,12 +19,8 @@ const Post = ({ _id, title, anonce, author, img, updatedAt }) => {
   }, [])
 
   const navigate = () => {
-    if (JSON.stringify(param) == "{}") {
-      route(`${_id}`);
-    } else {
-      route(`posts/${_id}`)
+      route(`../recipe/list/${_id}`)
     }
-  }
   return (
     <div className="post">
       <div className="post__title">
