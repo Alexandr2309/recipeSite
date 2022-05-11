@@ -6,11 +6,13 @@ import { PostsContext } from './../../context/Context';
 
 
 const FormEdit = () => {
-  const ref = useRef(null)
+  const ref = useRef(null);
+
   const { id } = useParams();
   const posts = useContext(PostsContext);
   const i = posts.findIndex(post => id === post._id);
   const { title, anonce, description, ingredients, portions, sweets, author, img, tags, tookTime, spentTime } = posts[i];
+
   const [ingrids, setIngrids] = useState('');
   const [isReady, setIsReady] = useState(false);
   const [tagsNow, setTags] = useState([]);
@@ -29,6 +31,11 @@ const FormEdit = () => {
     spentTime: spentTime,
   });
 
+  useEffect(() => {
+    setTags([...tags]);
+    const str = Object.entries(data.ingredients).reduce((a, b) => a + b[0] + ' - ' + b[1] + '\n', '')
+    setIngrids(str);
+  }, [])
   function printTextarea(field, isData = false, dataField) {
     if (field.key === 'Enter') {
       setIngrids(ingrids + '\n')
@@ -41,15 +48,14 @@ const FormEdit = () => {
     }
   }
   async function handlerSumbit() {
-    console.log(data)
     const ins = { ...data };
-    await api.insertRecipe(ins).then(res => {
-      alert('Рецепт успешно добавлен!');
+    await api.updateRecipeById(id, ins).then(res => {
+      alert('Рецепт успешно обновлён!');
       setData({
         title: '',
         anonce: '',
         description: '',
-        ingredients: '',
+        ingredients: ingredients,
         portions: 0,
         sweets: false,
         author: '',
@@ -112,7 +118,7 @@ const FormEdit = () => {
   }
 
   return (
-    <form onKeyDown={dontFetch} noValidate encType="multipart/form-data">
+    <form onKeyDown={dontFetch} noValidate >
       <label htmlFor="recipes_title">Название блюда *:</label>
       <p><input type="text" id="recipes_title"
         value={data.title}

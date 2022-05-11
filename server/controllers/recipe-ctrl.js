@@ -52,6 +52,10 @@ updateRecipe = async (req, res) => {
     recipe.portions = body.portions;
     recipe.sweets = body.sweets;
     recipe.author = body.author;
+    recipe.img = body.img ? body.img : recipe.img;
+    recipe.tags = body.tags
+    recipe.tookTime = body.tookTime
+    recipe.spentTime = body.spentTime
 
     recipe.save()
       .then(() => {
@@ -108,7 +112,7 @@ getRecipeById = async (req, res) => {
 getRecipeImg = async (req, res) => {
   try {
     const path = req.query.path;
-    console.log(path, req.query) 
+    console.log(path, req.query)
     if (fs.existsSync(path)) {
       console.log('Нашёлся - ', path);
       return res.download(path, path.name);

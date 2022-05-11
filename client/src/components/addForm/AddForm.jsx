@@ -36,7 +36,6 @@ const AddForm = () => {
     }
   }
   async function handlerSumbit() {
-    console.log(data)
     const ins = { ...data };
     await api.insertRecipe(ins).then(res => {
       alert('Рецепт успешно добавлен!');
