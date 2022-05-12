@@ -13,7 +13,7 @@ export const getRecipeById = id => api.get(`/recipe/${id}`);
 const apis = {
   insertRecipe,
   getAllRecipes,
-  updateRecipeById,
+  updateRecipeById, 
   deleteRecipeById,
   getRecipeById,
 };

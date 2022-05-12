@@ -43,13 +43,13 @@ updateRecipe = async (req, res) => {
       return res.status(400).json({
         err,
         message: 'Рецепт не найден',
-      });
+      }); 
     };
     recipe.title = body.title;
     recipe.anonce = body.anonce;
     recipe.description = body.description;
-    recipe.ingridients = body.ingridients;
-    recipe.portions = body.portions;
+    recipe.ingredients = body.ingredients;
+    recipe.portions = body.portions; 
     recipe.sweets = body.sweets;
     recipe.author = body.author;
     recipe.img = body.img ? body.img : recipe.img;

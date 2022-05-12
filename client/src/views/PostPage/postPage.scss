@@ -18,6 +18,13 @@
   }
 }
 .page {
+  &__recipe {
+    padding-top: 15px;
+    text-align: left;
+    letter-spacing: 0.5px;
+    margin: 0px auto;
+    max-width: 450px;
+  }
   &__title {
     margin-top: 10px;
     font-size: 24px;
