@@ -1,0 +1,20 @@
+.closeBtn{
+  margin: 10px 0;
+  padding: 0px 36px;
+  color: #ffffff;
+  transform: translateX(-7px);
+  background: #30c7a6;
+  align-self: start;
+  height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.4s ease;
+}
+.closeBtn:hover{
+  box-shadow: 0px 0px 10px rgba(44, 203, 223, 0.6);
+}

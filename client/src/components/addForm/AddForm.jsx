@@ -26,7 +26,9 @@ const AddForm = () => {
 
   function printTextarea(field, isData = false, dataField) {
     if (field.key === 'Enter') {
-      setIngrids(ingrids + '\n')
+      !isData
+        ? setIngrids(ingrids + '\n')
+        : setData({ ...data, description: data.description + '\n' })
     }
   }
   async function addTags(e) {
@@ -137,6 +139,7 @@ const AddForm = () => {
       <label htmlFor="recipes_description">Текстовое описание* :</label>
       <p><textarea id="recipes_description"
         value={data.description}
+        onKeyDown={e => printTextarea.call(null, e, true)}
         onChange={async e => setData({ ...data, description: e.target.value })}
         name="recipes_description"
         required

@@ -3,6 +3,9 @@ import React, { useEffect, useRef, useState, useContext } from 'react';
 import api from '../../api/index'
 import { useParams, useNavigate } from 'react-router-dom';
 import { PostsContext } from './../../context/Context';
+import PopUp from './../../components/UI/popUp/popUp';
+import SucessDelete from '../../components/UI/sucessDelete/SucessDelete';
+import NotFound from '../../components/UI/NotFound/NotFound';
 
 
 const FormEdit = () => {
@@ -13,7 +16,9 @@ const FormEdit = () => {
   const i = posts.findIndex(post => id === post._id);
   const { title, anonce, description, ingredients, portions, sweets, author, img, tags, tookTime, spentTime } = posts[i];
 
-  const route = useNavigate()
+  const route = useNavigate();
+  const [isDelete, setIsDelete] = useState(false);
+  const [viible, setVisible] = useState(false);
   const [ingrids, setIngrids] = useState('');
   const [isReady, setIsReady] = useState(false);
   const [tagsNow, setTags] = useState([]);
@@ -37,6 +42,11 @@ const FormEdit = () => {
     const str = Object.entries(data.ingredients).reduce((a, b) => a + b[0] + ' - ' + b[1] + '\n', '')
     setIngrids(str);
   }, [])
+  useEffect(() => {
+    if (isDelete) {
+      setVisible(true);
+    }
+  }, [isDelete, ])
   function printTextarea(field, isData = false, dataField) {
     if (field.key === 'Enter') {
       setIngrids(ingrids + '\n')
@@ -112,6 +122,13 @@ const FormEdit = () => {
     setData({ ...data, ingredients: { ...obj } });
     setIsReady(true);
   }
+  const deleteRecipe = async () => {
+    setIsDelete(true);
+    await api.deleteRecipeById(id).then(res => {
+      console.log(res);
+      console.log('Рецепт был удалён из БД')
+    })
+  }
   const dontFetch = (e) => {
     if (e.code == 'Enter') {
       e.preventDefault();
@@ -121,7 +138,17 @@ const FormEdit = () => {
 
   return (
     <div className="post__wrapper">
-      <form onKeyDown={dontFetch} noValidate >
+      <PopUp
+        visible={viible}
+        setVisible={setVisible}
+      >
+        {isDelete
+          ? <SucessDelete />
+          : <> <p style={{ textAlign: 'center', fontSize: 18 }}>Вы действительно хотите удалить рецепт?</p>
+            <button name='delete' onClick={deleteRecipe}>Подтвердить</button></>
+        }
+      </PopUp>
+      <form style={{ display: isDelete ? 'none' : 'unset' }} onKeyDown={dontFetch} noValidate >
         <label htmlFor="recipes_title">Название блюда *:</label>
         <p><input type="text" id="recipes_title"
           value={data.title}
@@ -226,9 +253,16 @@ const FormEdit = () => {
           name="recipes_spent"
           size={5} required /> мин</p>
         <div className="field">
-          <button type="submit" id="" name="save" onClick={addIngred} >Cохранить</button>
+          <button type="submit" id="" name="save" onClick={addIngred} >Обновить</button>
+          <button name="delete-btn" onClick={e => {
+            e.preventDefault();
+            setVisible(true)
+          }}>Удалить</button>
         </div>
       </form>
+      {/* } */}
+
+
     </div>
   )
 };

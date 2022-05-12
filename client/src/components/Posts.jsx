@@ -6,7 +6,6 @@ const Posts = ({ posts, sweets = false }) => {
   return (
     <div className='post__wrapper'>
       <h1 style={{ margin: '10px 0 0 0' }}>Все рецепты</h1>
-      <Search />
       {sweets
         ? posts.filter(post => post.sweets)
           .map(post => {

@@ -1,7 +1,7 @@
 import { useContext, useId, useState, useEffect } from 'react';
 import Posts from '../../components/Posts';
 import './App.css';
-import { PostsContext, NowPosts } from './../../context/Context';
+import { PostsContext, NowPosts } from '../../context/Context';
 import NotFound from '../../components/UI/NotFound/NotFound';
 import Search from '../../components/search/Search';
 
@@ -12,8 +12,9 @@ function All() {
     updatePosts([...posts]);
   }, [posts,])
   return (
-    <div className="App">
-      {nowPosts.length
+    <div className="App post__wrapper">
+      <Search />
+      {nowPosts.some(post => !post.sweets)
         ? <Posts posts={nowPosts} />
         : <NotFound />
       }

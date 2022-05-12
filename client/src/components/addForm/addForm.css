@@ -78,8 +78,45 @@ button[name="save"] {
   outline: none;
   transition: all 0.4s ease;
 }
+button[name="delete"] {
+  margin: 25px 0 10px 0;
+  padding: 0px 36px;
+  color: #ffffff;
+  background: #c73030;
+  transform: translateX(56%);
+  align-self: center;
+  height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.4s ease;
+}
+button[name="delete-btn"] {
+  margin: 25px 0 10px 45px;
+  padding: 0px 36px;
+  color: #ffffff;
+  background: #c73030;
+  align-self: center;
+  height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.4s ease;
+}
 button[name="save"]:hover {
   box-shadow: 0px 0px 10px rgba(44, 203, 223, 0.6);
+}
+button[name="delete"]:hover,
+button[name="delete-btn"]:hover {
+  box-shadow: 0px 0px 10px rgba(253, 7, 28, 0.6);
 }
 form ul {
   position: relative;
@@ -126,7 +163,7 @@ form ul {
 }
 .tags a {
   position: absolute;
-  top: 4px;
+  top: 7px;
   right: 3px;
   display: block;
   width: 12px;
@@ -163,7 +200,9 @@ input[type="checkbox"] + label:after {
   vertical-align: middle;
   transition: color ease 0.3s;
 }
-
+.field{
+  text-align: center;
+}
 input[type="checkbox"]:checked + label:after {
   color: #000;
   border-color: #000;
