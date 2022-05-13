@@ -14,6 +14,7 @@ const Recipe = new Schema(
     tags: { type: Array, required: true },
     tookTime: { type: Number, required: true },
     spentTime: { type: Number, required: true },
+    favorite: { type: Boolean, required: false, default: false },
   },
   { timestamps: true },
 );

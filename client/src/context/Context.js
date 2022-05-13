@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import api from '../api/index'
+import api from '../api/index';
 
 const componentDidMount = async () => {
   return await api.getAllRecipes().then(recipes => {
@@ -12,3 +12,7 @@ export const NowPosts = createContext({
   nowPosts: posts,
   updatePosts: () => { }
 });
+export const IsUpdate = createContext({
+  isUpdate: false,
+  setIsUpdate: () => { }
+})

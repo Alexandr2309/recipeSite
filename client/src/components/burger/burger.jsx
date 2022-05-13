@@ -126,7 +126,7 @@ const Burger = ({ state, setState }) => {
             <li><Link to='recipe/create' data-goto=".page__section-1" className="menu__link">Добавить репецт</Link></li>
             <li><Link to='recipe/sweets' data-goto=".page__section-3" className="menu__link">Сладости</Link></li>
             <li>
-              <a href="" className="menu__link">Избранное</a>
+              <Link to='recipe/favorite' className="menu__link">Избранное</Link>
               <span className="menu__arrow"></span>
               <ul className="menu__sub-list">
                 <li>

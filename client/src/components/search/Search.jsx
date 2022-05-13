@@ -23,7 +23,6 @@ const Search = () => {
   const onMouseLeave = (e) => {
     setBtnSyle(cl.btn)
   }
-  //---------- Дописать условия на поиск по тегу и в названии ----------//
   const searchPosts = (e) => {
     if (e.key === 'Enter') {
       if (!value) updatePosts([...posts])

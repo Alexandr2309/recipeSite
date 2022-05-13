@@ -9,8 +9,8 @@ const Sweets = () => {
   const posts = useContext(PostsContext);
   const { nowPosts, updatePosts } = useContext(NowPosts)
   useEffect(() => {
-    updatePosts([...posts])
-  }, [])
+    updatePosts([...posts]);
+  }, [posts,])
   return (
     <div className="App post__wrapper">
       <Search />

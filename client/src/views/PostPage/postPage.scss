@@ -23,12 +23,24 @@
     width: 26px;
     height: 26px;
   }
+  &__favorite {
+    position: absolute;
+    top: 20px;
+    transition: all .7s ease 0s;
+    right: 75px;
+    width: 28px;
+    height: 28px;
+    &:hover{
+     transform: scale(1.2);
+    }
+  }
   &__recipe {
     padding-top: 15px;
     text-align: justify;
     letter-spacing: 0.5px;
     margin: 0px auto;
     max-width: 550px;
+    margin-bottom: 30px;
   }
   &__title {
     margin-top: 10px;
@@ -125,11 +137,15 @@
   }
 
   &__about-text {
-    display: inline-block;
     padding-left: 12px;
     font-size: 20px;
     font-style: italic;
     margin: 0 15px 15px 0;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
   &__table {
     text-align: left;

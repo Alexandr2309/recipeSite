@@ -1,39 +1,45 @@
-import React, { useContext, useState, useEffect } from 'react';
-import Card from '../../components/cardRecipe/Card';
-import './postPage.css';
-import edit from '../../images/edit.png'
-import { PostsContext } from '../../context/Context'
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import TableIngreds from '../../components/UI/tableOnPostPage/TableIngreds';
-import moment from 'moment'
+import { IsUpdate, PostsContext } from '../../context/Context';
+import edit from '../../images/edit.png';
+import favorite from '../../images/empty-star.svg';
+import favoriteChek from '../../images/fill-star.svg';
 import { calendarDateParse } from '../../utils/calendarDateParse';
+import apis from './../../api/index';
+import './postPage.css';
 
 const PostPage = () => {
-  moment.locale('ru');
   const { id } = useParams();
+  console.log(id)
+  const { isUpdate, setIsUpdate } = useContext(IsUpdate);
   const posts = useContext(PostsContext);
   const [imageSrc, setImageSrc] = useState('');
   const i = posts.findIndex(post => id === post._id);
-  let { title, anonce, description, ingredients, portions, sweets, author, img, tags, tookTime, spentTime, updatedAt, createdAt } = posts[i];
-
-  console.log(description);
+  let { title, anonce, description, ingredients, portions, sweets, author, img, tags, tookTime, spentTime, updatedAt, createdAt, favorite: isFavorite } = posts[i];
   const fetchData = async () => {
     const response = await fetch(`http://localhost:3000/api/recipe-download?path=${img}`);
     const blob = await response.blob()
     const url = window.URL.createObjectURL(blob);
     setImageSrc(url);
   };
+  const updateFavorite = async (isF) => {
+    await apis.updateRecipeFavorite(id, { favorite: isF }).then(res => {
+      setIsUpdate(true);
+    })
+  }
   const route = useNavigate();
   const goEdit = () => {
     route(`../recipe/edit/${id}`)
   }
   useEffect(() => {
     fetchData();
-  }, [])
+  }, []);
   return (
     <div className='post__wrapper page__wrapper page'>
       <img src={edit} alt="edit-icon" className='page__edit' onClick={goEdit} />
-      <h2 style={{marginTop: 10, marginBottom: 5}}>{title}</h2>
+      <img src={isFavorite ? favoriteChek : favorite} alt="favorite-icon" className='page__favorite' onClick={async e => updateFavorite(!isFavorite)} />
+      <h2 style={{ marginTop: 10, marginBottom: 5 }}>{title}</h2>
       <div className="page__head">
         <div className="page__img">
           <img src={imageSrc} alt="Фото рецепта" />

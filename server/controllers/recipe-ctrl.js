@@ -43,13 +43,13 @@ updateRecipe = async (req, res) => {
       return res.status(400).json({
         err,
         message: 'Рецепт не найден',
-      }); 
+      });
     };
     recipe.title = body.title;
     recipe.anonce = body.anonce;
     recipe.description = body.description;
     recipe.ingredients = body.ingredients;
-    recipe.portions = body.portions; 
+    recipe.portions = body.portions;
     recipe.sweets = body.sweets;
     recipe.author = body.author;
     recipe.img = body.img ? body.img : recipe.img;
@@ -66,7 +66,41 @@ updateRecipe = async (req, res) => {
         })
       })
       .catch(err => {
-        res.staus(404).json({
+        res.status(404).json({
+          err,
+          message: 'Рецепт не обновлён, произошла ошибка, попробуйте позже'
+        })
+      })
+  })
+}
+updateRecipeFavorite = async (req, res) => {
+  const body = req.body
+
+  if (!body) {
+    return res.status(400).json({
+      success: false,
+      error: 'Неверно указаны данные в рецепте для обновления'
+    })
+  }
+  Recipe.findOne({ _id: req.params.id }).exec((err, recipe) => {
+    if (err) {
+      return res.status(400).json({
+        err,
+        message: 'Рецепт не найден',
+      })
+    };
+    recipe.favorite = body.favorite;
+
+    recipe.save()
+      .then(() => {
+        res.status(200).json({
+          success: true,
+          id: recipe._id,
+          message: 'Рецепт обновлён'
+        })
+      })
+      .catch(err => {
+        res.status(404).json({
           err,
           message: 'Рецепт не обновлён, произошла ошибка, попробуйте позже'
         })
@@ -139,5 +173,6 @@ module.exports = {
   getRecipes,
   getRecipeById,
   getRecipeImg,
-  uploadRecipeImg
+  uploadRecipeImg,
+  updateRecipeFavorite
 }
