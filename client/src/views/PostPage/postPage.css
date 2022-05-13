@@ -23,10 +23,10 @@
 
 .page__recipe {
   padding-top: 15px;
-  text-align: left;
+  text-align: justify;
   letter-spacing: 0.5px;
   margin: 0px auto;
-  max-width: 450px;
+  max-width: 550px;
 }
 
 .page__title {
@@ -36,7 +36,7 @@
   -ms-flex-item-align: start;
       -ms-grid-row-align: start;
       align-self: start;
-  margin-left: 27px;
+  margin-left: 47px;
   font-weight: bold;
   margin-bottom: -10px;
 }
@@ -48,7 +48,7 @@
 .page__head {
   font-size: 17px;
   width: 100%;
-  margin-left: 100px;
+  padding-left: 100px;
 }
 
 .page__card {
@@ -116,11 +116,34 @@
   margin-right: 7px;
 }
 
+.page__date-create {
+  margin: 5px 0;
+}
+
+.page__date-create::before {
+  content: "";
+  background: url("../../images/calendar.png") center/16px 16px no-repeat;
+  padding: 10px;
+  margin-right: 7px;
+}
+
+.page__date-update {
+  margin: 5px 0;
+}
+
+.page__date-update::before {
+  content: "";
+  background: url("../../images/update.png") center/16px 16px no-repeat;
+  padding: 10px;
+  margin-right: 7px;
+}
+
 .page__about-text {
   display: inline-block;
-  padding-left: 20px;
+  padding-left: 12px;
   font-size: 20px;
   font-style: italic;
+  margin: 0 15px 15px 0;
 }
 
 .page__table {
@@ -136,7 +159,7 @@
 .page__table table {
   width: 60%;
   font-size: 18px;
-  margin-left: 20px;
+  margin-left: 50px;
   margin-bottom: 10px;
   border-spacing: 2px;
 }

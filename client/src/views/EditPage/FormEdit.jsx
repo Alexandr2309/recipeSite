@@ -10,13 +10,16 @@ import NotFound from '../../components/UI/NotFound/NotFound';
 
 const FormEdit = () => {
   const ref = useRef(null);
+  const refDescription = useRef(null);
 
   const { id } = useParams();
   const posts = useContext(PostsContext);
   const i = posts.findIndex(post => id === post._id);
   const { title, anonce, description, ingredients, portions, sweets, author, img, tags, tookTime, spentTime } = posts[i];
+  const [descr, setDescr] = useState(description.replace(/<br>/gm, '\n'));
 
   const route = useNavigate();
+
   const [isDelete, setIsDelete] = useState(false);
   const [viible, setVisible] = useState(false);
   const [ingrids, setIngrids] = useState('');
@@ -38,18 +41,29 @@ const FormEdit = () => {
   });
 
   useEffect(() => {
+    let pos = window.localStorage.getItem('pos');
+    if (!pos) return;
+    refDescription.current.setSelectionRange(pos, pos);
+  }, [descr])
+  useEffect(() => {
     setTags([...tags]);
     const str = Object.entries(data.ingredients).reduce((a, b) => a + b[0] + ' - ' + b[1] + '\n', '')
     setIngrids(str);
-  }, [])
+  }, [,])
   useEffect(() => {
     if (isDelete) {
       setVisible(true);
     }
-  }, [isDelete, ])
+  }, [isDelete,])
+
   function printTextarea(field, isData = false, dataField) {
+    let l = field.target.selectionStart;
+    window.localStorage.setItem('pos', l + 1);
     if (field.key === 'Enter') {
-      setIngrids(ingrids + '\n')
+      const text = descr.slice(0, l) + '\n' + descr.slice(l);
+      isData
+        ? setDescr(text)
+        : setIngrids(ingrids + '\n');
     }
   }
   async function addTags(e) {
@@ -119,7 +133,9 @@ const FormEdit = () => {
       count = count.trim();
       obj[product] = count;
     });
-    setData({ ...data, ingredients: { ...obj } });
+    const result = descr.replace(/\n/g, '<br>');
+    console.log(result)
+    setData({ ...data, ingredients: { ...obj }, description: result });
     setIsReady(true);
   }
   const deleteRecipe = async () => {
@@ -179,8 +195,14 @@ const FormEdit = () => {
         <p className="comment">1-2 предложения для отображения в на общей стратнице рецпотов</p>
         <label htmlFor="recipes_description">Текстовое описание* :</label>
         <p><textarea id="recipes_description"
-          value={data.description}
-          onChange={async e => setData({ ...data, description: e.target.value })}
+          value={descr}
+          ref={refDescription}
+          onKeyDown={e => printTextarea.call(null, e, true)}
+          onChange={e => {
+            setDescr(e.target.value);
+            let l = e.target.selectionStart;
+            window.localStorage.setItem('pos', l);
+          }}
           name="recipes_description"
           required
           cols={40} rows={10} /></p>

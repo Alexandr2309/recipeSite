@@ -6,6 +6,7 @@ import './addForm.css';
 const AddForm = () => {
   const ref = useRef(null)
 
+  const [descr, setDescr] = useState('');
   const [ingrids, setIngrids] = useState('');
   const [isReady, setIsReady] = useState(false);
   const [tagsNow, setTags] = useState([]);
@@ -26,9 +27,11 @@ const AddForm = () => {
 
   function printTextarea(field, isData = false, dataField) {
     if (field.key === 'Enter') {
-      !isData
-        ? setIngrids(ingrids + '\n')
-        : setData({ ...data, description: data.description + '\n' })
+      let l = field.target.selectionStart;
+      const text = descr.slice(0, l) + '\n' + descr.slice(l);
+      isData
+        ? setDescr(text)
+        : setIngrids(ingrids + '\n')
     }
   }
   async function addTags(e) {
@@ -62,6 +65,7 @@ const AddForm = () => {
   }, [tagsNow]);
   useEffect(() => {
     if (isReady) {
+      console.log(data)
       handlerSumbit()
     }
   }, [isReady])
@@ -97,7 +101,9 @@ const AddForm = () => {
       count = count.trim();
       obj[product] = count;
     });
-    setData({ ...data, ingredients: { ...obj } });
+    const result = descr.replace(/\n/g, '<br>');
+    console.log(result)
+    setData({ ...data, ingredients: { ...obj }, description: result });
     setIsReady(true);
   }
   const dontFetch = (e) => {
@@ -138,9 +144,12 @@ const AddForm = () => {
       <p className="comment">1-2 предложения для отображения в на общей стратнице рецпотов</p>
       <label htmlFor="recipes_description">Текстовое описание* :</label>
       <p><textarea id="recipes_description"
-        value={data.description}
+        value={descr}
         onKeyDown={e => printTextarea.call(null, e, true)}
-        onChange={async e => setData({ ...data, description: e.target.value })}
+        onChange={async e => {
+          console.log(e.target.value);
+          setDescr(e.target.value);
+        }}
         name="recipes_description"
         required
         cols={40} rows={10} /></p>

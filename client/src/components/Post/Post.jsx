@@ -32,7 +32,7 @@ const Post = ({ _id, title, anonce, author, img, updatedAt }) => {
         </div>
         <div className="post__description">
           {anonce}
-          <br /><br />
+          <br />
           <button onClick={navigate}>Читать далее...</button>
         </div>
       </div>

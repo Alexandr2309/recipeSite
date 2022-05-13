@@ -10,6 +10,7 @@
   background: none;
   border: none;
   font-size: 17px;
+  margin: 10px 0;
   -webkit-transition: all 0.1s ease 0s;
   transition: all 0.1s ease 0s;
 }
@@ -52,14 +53,14 @@
 
 .post__img img {
   height: 100%;
-  width: 100%;
+  width: 210px;
 }
 
 .post__description {
   text-align: justify;
-  padding: 0px 9px;
+  padding: 0px 20px 0 0;
   margin-top: 15px;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .post__footer {
