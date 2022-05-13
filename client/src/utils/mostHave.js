@@ -14,7 +14,6 @@ export function printTextarea(field, isData = false, { setDescr, setIngrids, des
 export async function handlerUpdateSumbit(params) {
   const { data, setData, setTags, id, route } = params;
   const ins = { ...data };
-  console.log(ins)
   await api.updateRecipeById(id, ins).then(res => {
     alert('Рецепт успешно обновлён!');
     setData({

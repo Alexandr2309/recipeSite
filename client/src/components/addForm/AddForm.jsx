@@ -60,7 +60,6 @@ const AddForm = () => {
   }, [tagsNow]);
   useEffect(() => {
     if (isReady) {
-      console.log(data)
       handlerSumbit({ setData, setTags, data })
       setIsUpdate(true);
     }

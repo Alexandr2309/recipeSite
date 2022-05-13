@@ -95,7 +95,6 @@ const FormEdit = () => {
       obj[product] = count;
     });
     const result = descr.replace(/\n/g, '<br>');
-    console.log(result)
     setData({ ...data, ingredients: { ...obj }, description: result });
     setIsReady(true);
   }

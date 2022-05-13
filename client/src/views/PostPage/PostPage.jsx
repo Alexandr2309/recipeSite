@@ -11,7 +11,6 @@ import './postPage.css';
 
 const PostPage = () => {
   const { id } = useParams();
-  console.log(id)
   const { isUpdate, setIsUpdate } = useContext(IsUpdate);
   const posts = useContext(PostsContext);
   const [imageSrc, setImageSrc] = useState('');
