@@ -4,18 +4,18 @@ import cl from './successDelete.module.css'
 import { useNavigate } from 'react-router-dom';
 import { IsUpdate } from '../../../context/Context';
 
-const SucessDelete = () => {
+const SucessDelete = ({ id = false, title = 'Рецепт успешно удалён', textBtn = 'Вернуться на главную' }) => {
   const route = useNavigate();
   const { isUpdate, setIsUpdate } = useContext(IsUpdate)
   return (
     <div >
       <img src={gif} alt="успешно" />
-      <h5 style={{ fontSize: 28, textAlign: 'center', marginBottom: 20 }}>Рецепт усшено удалён</h5>
+      <h5 style={{ fontSize: 28, textAlign: 'center', marginBottom: 20 }}>{title}</h5>
       <div className="" style={{ textAlign: 'center' }}>
         <button className={cl.closeBtn} onClick={e => {
-          route('../recipe/list')
+          id ? route(`../recipe/list/${id}`) : route('../recipe/list')
           setIsUpdate(true);
-        }}>Вернуться на главную</button>
+        }}>{textBtn}</button>
       </div>
 
     </div>

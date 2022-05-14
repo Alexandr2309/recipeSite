@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { IsUpdate } from '../../context/Context';
 import { handlerSumbit, printTextarea, sendImg } from '../../utils/mostHave';
+import PopUp from '../UI/popUp/popUp';
+import SucessDelete from '../UI/sucessDelete/SucessDelete';
 
 import './addForm.css';
 
@@ -8,7 +10,8 @@ const AddForm = () => {
   const ref = useRef(null)
   const refDescription = useRef(null);
 
-  const { isUpdate, setIsUpdate } = useContext(IsUpdate)
+  const { isUpdate, setIsUpdate } = useContext(IsUpdate);
+  const [newId, setNewId] = useState(null);
   const [descr, setDescr] = useState('');
   const [ingrids, setIngrids] = useState('');
   const [isReady, setIsReady] = useState(false);
@@ -39,7 +42,10 @@ const AddForm = () => {
   }, [tagsNow]);
   useEffect(() => {
     if (isReady) {
-      handlerSumbit({ setData, setTags, data })
+      handlerSumbit({ setData, setTags, data, setNewId })
+      setVisible(true);
+      setDescr('');
+      setIngrids('');
       setIsUpdate(true);
     }
   }, [isReady]);
@@ -76,9 +82,16 @@ const AddForm = () => {
       e.preventDefault();
       return;
     }
-  }
+  };
+  const [visible, setVisible] = useState(false)
   return (
     <form onKeyDown={dontFetch} noValidate encType="multipart/form-data">
+      <PopUp
+        visible={visible}
+        setVisible={setVisible}
+      >
+        <SucessDelete id={newId} title='Рецепт успшено добавлен!' textBtn='Перейти к странице рецепта' />
+      </PopUp>
       <label htmlFor="recipes_title">Название блюда *:</label>
       <p><input type="text" id="recipes_title"
         value={data.title}
@@ -138,7 +151,7 @@ const AddForm = () => {
       <label htmlFor="recipes_portion">Количество порций* :</label>
       <p><input type="text"
         value={data.portions}
-        onChange={async e => setData({ ...data, portions: +e.target.value })}
+        onChange={async e => setData({ ...data, portions: parseInt(e.target.value) ? +e.target.value : 0 })}
         id="recipes_portion"
         name="recipes_portion"
         size={5} required /></p>
@@ -184,13 +197,13 @@ const AddForm = () => {
       <label htmlFor="recipes_ready">Было готово за* :</label>
       <p><input type="text" id="recipes_ready"
         value={data.tookTime}
-        onChange={e => setData({ ...data, tookTime: +e.target.value })}
+        onChange={e => setData({ ...data, tookTime: parseInt(e.target.value) ? +e.target.value : 0 })}
         name="recipes_ready"
         size={5} required /> мин</p>
       <label htmlFor="recipes_spent">Вы потратили времени* :</label>
       <p><input type="text" id="recipes_spent"
         value={data.spentTime}
-        onChange={e => setData({ ...data, spentTime: +e.target.value })}
+        onChange={e => setData({ ...data, spentTime: parseInt(e.target.value) ? +e.target.value : 0 })}
         name="recipes_spent"
         size={5} required /> мин</p>
       <div className="field">

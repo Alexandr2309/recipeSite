@@ -16,7 +16,7 @@ createRecipe = (req, res) => {
 
   if (!recipe) {
     return res.status(400).json({ success: false, error: err })
-  };
+  };   
 
   recipe
     .save()
@@ -115,7 +115,11 @@ deleteRecipe = async (req, res) => {
     if (!recipe) {
       return res.status(404).json({ success: false, message: 'Рецепт не найден' })
     };
-    // fs.unlinkSync(recipe.img);
+    console.log(recipe.img)
+    fs.unlinkSync(recipe.img, err => {
+      if (err) return res.status(404).json({ err, message: 'Не удалось удалить изображение' });
+      console.log('Файл успешно удалён')
+    });
     return res.status(200).json({ success: true, data: recipe })
   })
 }
@@ -149,7 +153,6 @@ getRecipeImg = async (req, res) => {
   try {
     const path = req.query.path;
     if (fs.existsSync(path)) {
-      console.log('Нашёлся - ', path);
       return res.download(path, path.name);
     }
     return res.status(400).json({ message: 'Download error' })

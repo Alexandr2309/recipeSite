@@ -34,10 +34,11 @@ export async function handlerUpdateSumbit(params) {
   });
 };
 export async function handlerSumbit(params) {
-  const { data, setData, setTags } = params;
+  const { data, setData, setTags, setNewId } = params;
   const ins = { ...data };
   await api.insertRecipe(ins).then(res => {
-    alert('Рецепт успешно добавлен!');
+    if (setNewId) setNewId(res.data.id);
+    console.log(res)
     setData({
       title: '',
       anonce: '',

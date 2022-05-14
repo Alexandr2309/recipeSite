@@ -179,7 +179,7 @@ const FormEdit = () => {
         <label htmlFor="recipes_portion">Количество порций* :</label>
         <p><input type="text"
           value={data.portions}
-          onChange={async e => setData({ ...data, portions: +e.target.value })}
+          onChange={async e => setData({ ...data, portions: parseInt(e.target.value) ? +e.target.value : 0 })}
           id="recipes_portion"
           name="recipes_portion"
           size={5} required /></p>
@@ -225,13 +225,13 @@ const FormEdit = () => {
         <label htmlFor="recipes_ready">Было готово за* :</label>
         <p><input type="text" id="recipes_ready"
           value={data.tookTime}
-          onChange={e => setData({ ...data, tookTime: +e.target.value })}
+          onChange={e => setData({ ...data, tookTime: parseInt(e.target.value) ? +e.target.value : 0 })}
           name="recipes_ready"
           size={5} required /> мин</p>
         <label htmlFor="recipes_spent">Вы потратили времени* :</label>
         <p><input type="text" id="recipes_spent"
           value={data.spentTime}
-          onChange={e => setData({ ...data, spentTime: +e.target.value })}
+          onChange={e => setData({ ...data, spentTime: parseInt(e.target.value) ? +e.target.value : 0 })}
           name="recipes_spent"
           size={5} required /> мин</p>
         <div className="field">
