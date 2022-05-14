@@ -1,12 +1,10 @@
-import axios from 'axios';
-import React, { useEffect, useRef, useState, useContext } from 'react';
-import api from '../../api/index'
-import { useParams, useNavigate } from 'react-router-dom';
-import { PostsContext, IsUpdate } from '../../context/Context';
-import PopUp from './../../components/UI/popUp/popUp';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import api from '../../api/index';
 import SucessDelete from '../../components/UI/sucessDelete/SucessDelete';
-import NotFound from '../../components/UI/NotFound/NotFound';
+import { IsUpdate, PostsContext } from '../../context/Context';
 import { handlerUpdateSumbit, printTextarea, sendImg } from '../../utils/mostHave';
+import PopUp from './../../components/UI/popUp/popUp';
 
 
 const FormEdit = () => {

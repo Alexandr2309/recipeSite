@@ -34,27 +34,6 @@ const AddForm = () => {
       setValue('');
     }
   }
-
-  // async function handlerSumbit() {
-  //   const ins = { ...data };
-  //   await api.insertRecipe(ins).then(res => {
-  //     alert('Рецепт успешно добавлен!');
-  //     setData({
-  //       title: '',
-  //       anonce: '',
-  //       description: '',
-  //       ingredients: '',
-  //       portions: 0,
-  //       sweets: false,
-  //       author: '',
-  //       img: '',
-  //       tags: '',
-  //       tookTime: 0,
-  //       spentTime: 0,
-  //     });
-  //     setTags([]);
-  //   })
-  // };
   useEffect(() => {
     setData({ ...data, tags: tagsNow })
   }, [tagsNow]);

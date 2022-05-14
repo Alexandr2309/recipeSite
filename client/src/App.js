@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import api from './api/index';
 import './App.css';
 import Burger from './components/burger/burger';
-import { IsUpdate, NowPosts, PostsContext, isUpdate } from './context/Context';
+import { IsUpdate, NowPosts, PostsContext } from './context/Context';
 import All from './views/All/All';
 import FormEdit from './views/EditPage/FormEdit';
 import Favorites from './views/Favorites/Favorites';

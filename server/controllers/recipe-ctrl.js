@@ -114,7 +114,8 @@ deleteRecipe = async (req, res) => {
     };
     if (!recipe) {
       return res.status(404).json({ success: false, message: 'Рецепт не найден' })
-    }
+    };
+    // fs.unlinkSync(recipe.img);
     return res.status(200).json({ success: true, data: recipe })
   })
 }
@@ -139,14 +140,14 @@ getRecipeById = async (req, res) => {
     }
     if (!recipe) {
       return res.status(404).json({ success: false, error: 'Рецепт не найден' })
-    }
+    };
+
     return res.status(200).json({ success: true, data: recipe })
   })
 }
 getRecipeImg = async (req, res) => {
   try {
     const path = req.query.path;
-    console.log(path, req.query)
     if (fs.existsSync(path)) {
       console.log('Нашёлся - ', path);
       return res.download(path, path.name);
