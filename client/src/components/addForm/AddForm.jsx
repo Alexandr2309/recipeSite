@@ -27,7 +27,7 @@ const AddForm = () => {
       });
 
       if(imgNow) {
-         axios.post('http://localhost:3000/api/recipe-delete_img', {
+         axios.post('https://lit-taiga-18944.herokuapp.com/api/recipe-delete_img', {
           public_id: data.img.match(/recipes\/.+(?=\.)/)
         })
       }

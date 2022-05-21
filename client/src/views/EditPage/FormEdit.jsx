@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../api/index';
 import SucessDelete from '../../components/UI/sucessDelete/SucessDelete';
-import { IsUpdate, PostsContext } from '../../context/Context';
-import { handlerUpdateSumbit, printTextarea, sendImg } from '../../utils/mostHave';
-import PopUp from './../../components/UI/popUp/popUp';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
 import { setIsUpdate } from '../../store/slices/isUpdate';
+import { handlerUpdateSumbit, printTextarea } from '../../utils/mostHave';
+import PopUp from './../../components/UI/popUp/popUp';
 
 const FormEdit = () => {
   const ref = useRef(null);
@@ -58,7 +57,7 @@ const FormEdit = () => {
       });
 
     if (imgNow) {
-      axios.post('http://localhost:3000/api/recipe-delete_img', {
+      axios.post('https://lit-taiga-18944.herokuapp.com/api/recipe-delete_img', {
         public_id: data.img.match(/recipes\/.+(?=\.)/)
       })
     }

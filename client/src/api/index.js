@@ -1,7 +1,8 @@
 import axios from 'axios';
+const apiPort = process.env.PORT || 3000;
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: `https://lit-taiga-18944.herokuapp.com/api`,
 });
 
 export const insertRecipe = recipe => api.post(`/recipe`, recipe);
