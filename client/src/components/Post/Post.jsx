@@ -8,15 +8,15 @@ const Post = ({ _id, title, anonce, author, img, updatedAt }) => {
   const [imageSrc, setImageSrc] = useState('')
   const [param, setParam] = useSearchParams();
   const location = useLocation();
-  const fetchData = async () => {
-    const response = await fetch(`http://localhost:3000/api/recipe-download?path=${img}`);
-    const blob = await response.blob()
-    const url = window.URL.createObjectURL(blob);
-    setImageSrc(url);
-  };
-  useEffect(() => {
-    fetchData();
-  }, [])
+  // const fetchData = async () => {
+  //   const response = await fetch(`http://localhost:3000/api/recipe-download?path=${img}`);
+  //   const blob = await response.blob()
+  //   const url = window.URL.createObjectURL(blob);
+  //   setImageSrc(url);
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, [])
 
   const navigate = () => {
     route(`../recipe/list/${_id}`)
@@ -28,7 +28,7 @@ const Post = ({ _id, title, anonce, author, img, updatedAt }) => {
       </div>
       <div className="post__block">
         <div className="post__img">
-          <img src={imageSrc} alt="Фото рецепта" />
+          <img src={img} alt="Фото рецепта" />
         </div>
         <div className="post__description">
           {anonce}

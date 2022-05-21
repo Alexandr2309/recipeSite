@@ -60,6 +60,7 @@ export const sendImg = async (ref, setData, data) => {
   try {
     const formData = new FormData();
     formData.append('file', ref.current.files[0]);
+    formData.append('upload_preset', 'ef6jgyoo');
     await axios.post('http://localhost:3000/api/recipe-img', formData).then(async (res) => {
       setData({ ...data, img: res.data });
     })
