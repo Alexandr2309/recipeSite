@@ -1,13 +1,5 @@
 const Recipe = require('../models/recipe-model');
 const fs = require('fs');
-const config = require('../config/default.json');
-
-const cloudinary = require('cloudinary');
-cloudinary.config({
-  cloud_name: 'saha230904',
-  api_key: '544956277398551',
-  api_secret: 'Aj2QOdO7-Zb0iP2Xiz-IPuAz1UE'
-});
 
 createRecipe = (req, res) => {
   const body = req.body;
@@ -23,7 +15,7 @@ createRecipe = (req, res) => {
 
   if (!recipe) {
     return res.status(400).json({ success: false, error: err })
-  };
+  };   
 
   recipe
     .save()
@@ -122,11 +114,6 @@ deleteRecipe = async (req, res) => {
     if (!recipe) {
       return res.status(404).json({ success: false, message: 'Рецепт не найден' })
     };
-    console.log(recipe.img)
-    fs.unlinkSync(recipe.img, err => {
-      if (err) return res.status(404).json({ err, message: 'Не удалось удалить изображение' });
-      console.log('Файл успешно удалён')
-    });
     return res.status(200).json({ success: true, data: recipe })
   })
 }
@@ -170,14 +157,12 @@ getRecipeImg = async (req, res) => {
 uploadRecipeImg = async (req, res) => {
   try {
     const file = req.files.file;
-    await cloudinary.v2.uploader.upload(file, { public_id: file.name }, (err, res) => {
-      console.log(err) || console.log(res);
-    })
-    const path = config.filePath + Date.now() + file.name;
+    const path = req.filePath + Date.now() + file.name;
     await fs.writeFile(path, file.data, err => err ? console.log(err) : 0);
+    console.log(path);
     res.send(path)
   } catch (error) {
-    return res.status(400).json({ success: false, error, message: error })
+    return res.status(400).json({ success: false, error })
   }
 }
 module.exports = {

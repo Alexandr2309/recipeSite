@@ -55,13 +55,23 @@ export async function handlerSumbit(params) {
     setTags([]);
   })
 };
+export function addImage(ref, setData, data) {
+  const formData = new FormData();
+  formData.append('file', ref.current.files[0])
+  formData.append('upload_preset', 'ef6jgyoo');
+
+  axios.post('https://api.cloudinary.com/v1_1/saha230904/image/upload', formData)
+    .then(res => {
+      console.log(res);
+      setData({ ...data, img: res.data.secure_url });
+    })
+}
 export const sendImg = async (ref, setData, data) => {
   if (!ref.current.files[0]) return;
   try {
     const formData = new FormData();
     formData.append('file', ref.current.files[0]);
-    formData.append('upload_preset', 'ef6jgyoo');
-    await axios.post('http://localhost:3000/api/recipe-img', formData).then(async (res) => {
+    await axios.post('https://lit-taiga-18944.herokuapp.com/api/recipe-img', formData).then(async (res) => {
       setData({ ...data, img: res.data });
     })
       .catch((err) => ("Error occured", err));
