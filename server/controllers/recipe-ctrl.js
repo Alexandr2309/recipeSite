@@ -2,7 +2,7 @@ const Recipe = require('../models/recipe-model');
 const fs = require('fs');
 const config = require('../config/default.json');
 
-const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 cloudinary.config({
   cloud_name: 'saha230904',
   api_key: '544956277398551',
@@ -115,18 +115,14 @@ updateRecipeFavorite = async (req, res) => {
   })
 }
 deleteRecipe = async (req, res) => {
-  await Recipe.findOneAndDelete({ _id: req.params.id }).exec((err, recipe) => {
+  await Recipe.findOneAndDelete({ _id: req.params.id }).exec((err, recipe) => { 
     if (err) {
       return res.status(400).json({ success: false, error: err })
     };
     if (!recipe) {
       return res.status(404).json({ success: false, message: 'Рецепт не найден' })
     };
-    console.log(recipe.img)
-    fs.unlinkSync(recipe.img, err => {
-      if (err) return res.status(404).json({ err, message: 'Не удалось удалить изображение' });
-      console.log('Файл успешно удалён')
-    });
+    cloudinary.uploader.destroy(recipe.img.match(/recipes\/.+(?=\.)/), function(result) { });
     return res.status(200).json({ success: true, data: recipe })
   })
 }
@@ -156,6 +152,11 @@ getRecipeById = async (req, res) => {
     return res.status(200).json({ success: true, data: recipe })
   })
 }
+deleteImg = async (req, res) => {
+   cloudinary.uploader.destroy(req.body.public_id, function(result) { });
+}
+
+/*  Скачивание картинки, пока что не нужно
 getRecipeImg = async (req, res) => {
   try {
     const path = req.query.path;
@@ -167,6 +168,7 @@ getRecipeImg = async (req, res) => {
     return res.status(404).json({ success: false, error: error })
   }
 }
+Выгрузка картинки, также не нужно
 uploadRecipeImg = async (req, res) => {
   try {
     const file = req.files.file;
@@ -180,13 +182,15 @@ uploadRecipeImg = async (req, res) => {
     return res.status(400).json({ success: false, error, message: error })
   }
 }
+*/
 module.exports = {
   createRecipe,
   updateRecipe,
   deleteRecipe,
   getRecipes,
   getRecipeById,
-  getRecipeImg,
-  uploadRecipeImg,
+  deleteImg,
+  // getRecipeImg,
+  // uploadRecipeImg,
   updateRecipeFavorite
 }

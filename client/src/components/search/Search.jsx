@@ -2,10 +2,16 @@ import React, { useState, useContext } from 'react';
 import { NowPosts } from '../../context/Context.js';
 import { cl } from './searchStyles'
 import { PostsContext } from './../../context/Context';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateNowPosts } from '../../store/slices/posts.js';
 
 const Search = () => {
-  const { nowPosts, updatePosts } = useContext(NowPosts);
-  const posts = useContext(PostsContext);
+  // const { nowPosts, updatePosts } = useContext(NowPosts);
+  const posts = useSelector(state => state.posts.posts)
+  const nowPosts = useSelector(state => state.posts.nowPosts)
+  const dispatch = useDispatch();
+
+  // const posts = useContext(PostsContext);
   const [value, setValue] = useState('');
 
   const [btnStyle, setBtnSyle] = useState(cl.btn);
@@ -25,24 +31,24 @@ const Search = () => {
   }
   const searchPosts = (e) => {
     if (e.key === 'Enter') {
-      if (!value) updatePosts([...posts])
-      updatePosts(posts.filter(post => {
+      if (!value) dispatch(updateNowPosts([...posts]))
+      dispatch(updateNowPosts(posts.filter(post => {
         const isInclude = post.title.toLowerCase().includes(value.toLowerCase()) ||
           post.tags.some(tag => tag.toLowerCase().includes(value.toLowerCase()));
         if (isInclude) return post;
         else return false;
-      }));
+      })));
       setValue('');
     }
   };
   const serchPostsBtn = e => {
-    if (!value) updatePosts([...posts])
-    updatePosts(posts.filter(post => {
+    if (!value) dispatch(updateNowPosts([...posts]))
+    dispatch(updateNowPosts(posts.filter(post => {
       const isInclude = post.title.toLowerCase().includes(value.toLowerCase()) ||
         post.tags.some(tag => tag.toLowerCase().includes(value.toLowerCase()));
       if (isInclude) return post;
       else return false;
-    }));
+    })));
     setValue('');
   }
 

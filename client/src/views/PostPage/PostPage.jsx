@@ -1,39 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import TableIngreds from '../../components/UI/tableOnPostPage/TableIngreds';
-import { IsUpdate, PostsContext } from '../../context/Context';
 import edit from '../../images/edit.png';
 import favorite from '../../images/empty-star.svg';
 import favoriteChek from '../../images/fill-star.svg';
+import { setIsUpdate } from '../../store/slices/isUpdate';
 import { calendarDateParse } from '../../utils/calendarDateParse';
 import apis from './../../api/index';
 import './postPage.css';
 
 const PostPage = () => {
   const { id } = useParams();
-  const { isUpdate, setIsUpdate } = useContext(IsUpdate);
-  const posts = useContext(PostsContext);
-  const [imageSrc, setImageSrc] = useState('');
+  const dispatch = useDispatch();
+  const posts = useSelector(state => state.posts.posts);
+  const isUpdate = useSelector(state => state.isUpdate.isUpdate);
+  
   const i = posts.findIndex(post => id === post._id);
-  let { title, anonce, description, ingredients, portions, sweets, author, img, tags, tookTime, spentTime, updatedAt, createdAt, favorite: isFavorite } = posts[i];
-  const fetchData = async () => {
-    const response = await fetch(`http://localhost:3000/api/recipe-download?path=${img}`);
-    const blob = await response.blob()
-    const url = window.URL.createObjectURL(blob);
-    setImageSrc(url);
-  };
+  let { title, anonce, description, ingredients, portions, author, img, tookTime, updatedAt, createdAt, favorite: isFavorite } = posts[i];
+
   const updateFavorite = async (isF) => {
     await apis.updateRecipeFavorite(id, { favorite: isF }).then(res => {
-      setIsUpdate(true);
+      dispatch(setIsUpdate(true));
     })
-  }
+  };
+
   const route = useNavigate();
   const goEdit = () => {
     route(`../recipe/edit/${id}`)
   }
-  useEffect(() => {
-    fetchData();
-  }, []);
+
   return (
     <div className='post__wrapper page__wrapper page'>
       <img src={edit} alt="edit-icon" className='page__edit' onClick={goEdit} />
@@ -41,7 +37,7 @@ const PostPage = () => {
       <h2 style={{ marginTop: 10, marginBottom: 5 }}>{title}</h2>
       <div className="page__head">
         <div className="page__img">
-          <img src={imageSrc} alt="Фото рецепта" />
+          <img src={img} alt="Фото рецепта" />
         </div>
         <div className="page__about">
           <div className="page__portion">{portions} порции</div>

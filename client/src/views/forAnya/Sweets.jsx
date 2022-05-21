@@ -4,13 +4,16 @@ import NotFound from '../../components/UI/NotFound/NotFound';
 import Posts from './../../components/Posts';
 import { PostsContext, NowPosts } from './../../context/Context';
 import Search from './../../components/search/Search';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateNowPosts } from '../../store/slices/posts';
 
 const Sweets = () => {
-  const posts = useContext(PostsContext);
-  const { nowPosts, updatePosts } = useContext(NowPosts)
+  const posts = useSelector(state => state.posts.posts)
+  const nowPosts = useSelector(state => state.posts.nowPosts);
+  const dispatch = useDispatch();
   useEffect(() => {
-    updatePosts([...posts]);
-  }, [posts,])
+    dispatch(updateNowPosts([...posts]));
+  }, [posts])
   return (
     <div className="App post__wrapper">
       <Search />

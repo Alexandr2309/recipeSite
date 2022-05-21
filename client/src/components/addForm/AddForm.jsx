@@ -1,28 +1,39 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { IsUpdate } from '../../context/Context';
-import { handlerSumbit, printTextarea, sendImg } from '../../utils/mostHave';
+import { handlerSumbit, printTextarea } from '../../utils/mostHave';
 import PopUp from '../UI/popUp/popUp';
 import SucessDelete from '../UI/sucessDelete/SucessDelete';
 import axios from 'axios'
 import './addForm.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { setIsUpdate } from '../../store/slices/isUpdate';
 
 const AddForm = () => {
   const ref = useRef(null)
   const refDescription = useRef(null);
+  const dispatch = useDispatch();
 
-  function addImage(file) {
-    const formData = new FormData();
-    formData.append('file', ref.current.files[0])
-    formData.append('upload_preset', 'ef6jgyoo');
+   function addImage(file) {
+     if(!ref.current.files[0]) return;
+     let imgNow = data.img;
 
-    axios.post('http://api.cloudinary.com/v1_1/saha230904/image/upload', formData)
-      .then(res => {
-        console.log(res);
-        setData({ ...data, img: res.data.secure_url });
-      })
+     const formData = new FormData();
+     formData.append('file', ref.current.files[0])
+     formData.append('upload_preset', 'ef6jgyoo');
+     axios.post('http://api.cloudinary.com/v1_1/saha230904/image/upload', formData)
+     .then(res => {
+       console.log(res);
+       setData({ ...data, img: res.data.secure_url });
+      });
+
+      if(imgNow) {
+         axios.post('http://localhost:3000/api/recipe-delete_img', {
+          public_id: data.img.match(/recipes\/.+(?=\.)/)
+        })
+      }
   }
-  const [image, setImage] = useState(null);
-  const { isUpdate, setIsUpdate } = useContext(IsUpdate);
+
+  const isUpdate = useSelector(state => state.isUpdate.isUpdate);
   const [newId, setNewId] = useState(null);
   const [descr, setDescr] = useState('');
   const [ingrids, setIngrids] = useState('');
@@ -54,11 +65,11 @@ const AddForm = () => {
   }, [tagsNow]);
   useEffect(() => {
     if (isReady) {
+      dispatch(setIsUpdate(true));
       handlerSumbit({ setData, setTags, data, setNewId })
       setVisible(true);
       setDescr('');
       setIngrids('');
-      setIsUpdate(true);
     }
   }, [isReady]);
   useEffect(() => {
@@ -95,6 +106,7 @@ const AddForm = () => {
       return;
     }
   };
+
   const [visible, setVisible] = useState(false)
   return (
     <form onKeyDown={dontFetch} noValidate encType="multipart/form-data">
@@ -126,7 +138,9 @@ const AddForm = () => {
             </path>
           </svg>
           <span className="upload-file__text">Прикрепить файл</span>
-        </label></p>
+        </label>
+        <img src={data.img || ''} alt="Превью"  className='img-preview' style={{display: data.img ? 'block' : 'none'}}/>
+        </p>
       <p className='comment'>Если у вас нет готового фото, пропустите этот шаг</p>
       <label htmlFor="recipes_anonce">Краткое описание блюда*:</label>
       <p><input type="text"

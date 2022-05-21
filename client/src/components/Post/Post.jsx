@@ -1,23 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams, useResolvedPath, useSearchParams } from 'react-router-dom';
-import { dateParse } from '../../utils/dateParse'
+import React, { useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { dateParse } from '../../utils/dateParse';
 import './post.css';
 
 const Post = ({ _id, title, anonce, author, img, updatedAt }) => {
   const route = useNavigate();
-  const [imageSrc, setImageSrc] = useState('')
   const [param, setParam] = useSearchParams();
   const location = useLocation();
-  // const fetchData = async () => {
-  //   const response = await fetch(`http://localhost:3000/api/recipe-download?path=${img}`);
-  //   const blob = await response.blob()
-  //   const url = window.URL.createObjectURL(blob);
-  //   setImageSrc(url);
-  // };
-  // useEffect(() => {
-  //   fetchData();
-  // }, [])
-
+  
   const navigate = () => {
     route(`../recipe/list/${_id}`)
   }
