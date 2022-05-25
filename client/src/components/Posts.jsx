@@ -21,8 +21,7 @@ const Posts = ({ posts, sweets = false, title = "Все рецепты", favorit
             />
           })
         : favorite
-        ? posts.filter(post => post.favorite)
-          .map(post => {
+          ? posts.map(post => {
             const { _id, title, author, anonce, img, updatedAt } = post;
             return <Post
               key={_id}
@@ -34,19 +33,19 @@ const Posts = ({ posts, sweets = false, title = "Все рецепты", favorit
               updatedAt={updatedAt}
             />
           })
-        : posts.filter(post => !post.sweets)
-          .map(post => {
-            const { _id, title, author, anonce, img, updatedAt } = post;
-            return <Post
-              key={_id}
-              _id={_id}
-              title={title}
-              author={author}
-              anonce={anonce}
-              img={img}
-              updatedAt={updatedAt}
-            />
-          })
+          : posts.filter(post => !post.sweets)
+            .map(post => {
+              const { _id, title, author, anonce, img, updatedAt } = post;
+              return <Post
+                key={_id}
+                _id={_id}
+                title={title}
+                author={author}
+                anonce={anonce}
+                img={img}
+                updatedAt={updatedAt}
+              />
+            })
       }
     </div>
   )

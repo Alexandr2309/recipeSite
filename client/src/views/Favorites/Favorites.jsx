@@ -8,15 +8,14 @@ import { updateNowPosts } from '../../store/slices/posts';
 function Favorites() {
   const posts = useSelector(state => state.posts.posts)
   const nowPosts = useSelector(state => state.posts.nowPosts);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(updateNowPosts([...posts]));
-  }, [posts])
+  let arrayOfFavorites = useSelector(state => state.user.favoritePosts);
+
+  let favoritePosts = posts.filter(post => arrayOfFavorites.includes(post._id));
   return (
     <div className="App post__wrapper">
       <Search />
-      {nowPosts.some(post => !post.sweets)
-        ? <Posts posts={nowPosts} favorite={true} />
+      {favoritePosts.length
+        ? <Posts posts={favoritePosts} favorite={true} />
         : <NotFound />
       }
     </div>

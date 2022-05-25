@@ -24,8 +24,8 @@
 .page__favorite {
   position: absolute;
   top: 20px;
-  -webkit-transition: all .7s ease 0s;
-  transition: all .7s ease 0s;
+  -webkit-transition: all 0.7s ease 0s;
+  transition: all 0.7s ease 0s;
   right: 75px;
   width: 28px;
   height: 28px;
@@ -33,7 +33,7 @@
 
 .page__favorite:hover {
   -webkit-transform: scale(1.2);
-          transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .page__recipe {
@@ -50,8 +50,8 @@
   font-size: 24px;
   color: #e39915;
   -ms-flex-item-align: start;
-      -ms-grid-row-align: start;
-      align-self: start;
+  -ms-grid-row-align: start;
+  align-self: start;
   margin-left: 47px;
   font-weight: bold;
   margin-bottom: -10px;
@@ -59,6 +59,7 @@
 
 .page__wrapper {
   position: relative;
+  /* z-index: -1; */
 }
 
 .page__head {
@@ -89,7 +90,7 @@
 .page__img img {
   width: 100%;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 
 .page__about {
@@ -170,8 +171,8 @@
   text-align: left;
   float: left;
   -ms-flex-item-align: start;
-      -ms-grid-row-align: start;
-      align-self: start;
+  -ms-grid-row-align: start;
+  align-self: start;
   width: 100%;
   background-color: #d9e0a6;
 }
@@ -207,4 +208,8 @@
 
 .page__table-colorize {
   background: #e5eac2;
+}
+.page__date-create span,
+.page__date-update span {
+  display: contents;
 }

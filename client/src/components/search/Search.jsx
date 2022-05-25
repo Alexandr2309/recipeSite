@@ -54,7 +54,7 @@ const Search = () => {
 
   return (
     <div style={cl.wr}>
-      <h1 style={{ margin: '0 0 20px 0', transform: 'translate(0, 5px)' }}>Найти рецепт</h1>
+      <h1 style={{ margin: '0 0 20px 0', paddingTop: 5}}>Найти рецепт</h1>
       <label htmlFor="search" style={cl.label}>Слова в названии рецепта или теги</label>
       <input type="text" id="search" name=""
         style={inpStyle}

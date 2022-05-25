@@ -1,4 +1,5 @@
 const Recipe = require('../models/recipe-model');
+const UserPosts = require('../models/user-posts');
 const fs = require('fs');
 const config = require('../config/default.json');
 
@@ -33,7 +34,7 @@ createRecipe = (req, res) => {
         id: recipe._id,
         message: 'Recipe created!',
       })
-    })
+    });
 };
 updateRecipe = async (req, res) => {
   const body = req.body;
@@ -115,14 +116,14 @@ updateRecipeFavorite = async (req, res) => {
   })
 }
 deleteRecipe = async (req, res) => {
-  await Recipe.findOneAndDelete({ _id: req.params.id }).exec((err, recipe) => { 
+  await Recipe.findOneAndDelete({ _id: req.params.id }).exec((err, recipe) => {
     if (err) {
       return res.status(400).json({ success: false, error: err })
     };
     if (!recipe) {
       return res.status(404).json({ success: false, message: 'Рецепт не найден' })
     };
-    cloudinary.uploader.destroy(recipe.img.match(/recipes\/.+(?=\.)/), function(result) { });
+    cloudinary.uploader.destroy(recipe.img.match(/recipes\/.+(?=\.)/), function (result) { });
     return res.status(200).json({ success: true, data: recipe })
   })
 }
@@ -153,9 +154,108 @@ getRecipeById = async (req, res) => {
   })
 }
 deleteImg = async (req, res) => {
-   cloudinary.uploader.destroy(req.body.public_id, function(result) { });
+  cloudinary.uploader.destroy(req.body.public_id, function (result) { });
 }
+createUser = async (req, res) => {
+  const body = req.body;
+  if (!body) {
+    return res.status(400).json({ success: false, error: 'Отправленны некорректные данные' })
+  }
 
+  const user = new UserPosts(body);
+
+  if (!user) return res.status(400).json({ success: false, error: err });
+
+  user
+    .save()
+    .then(result => {
+      res.status(201).json({
+        success: true,
+        id: user.id,
+        message: 'Пользователь успешно добавлен'
+      })
+    })
+}
+updateUserFavoritePosts = async (req, res) => {
+  const body = req.body
+
+  if (!body) {
+    return res.status(400).json({
+      success: false,
+      error: 'Неверно указаны данные в рецепте для обновления'
+    })
+  }
+  UserPosts.findOne({ id: body.id }).exec((err, user) => {
+    if (err) {
+      return res.status(400).json({
+        err,
+        message: 'Рецепт не найден',
+      })
+    };
+    user.favoritePosts = body.favoritePosts || Array;
+
+    user.save()
+      .then(() => {
+        res.status(200).json({
+          success: true,
+          id: user.id,
+          message: 'Избранные рецепты обновлены'
+        })
+      })
+      .catch(err => {
+        res.status(404).json({
+          err,
+          message: 'Рецепт не обновлён, произошла ошибка, попробуйте позже'
+        })
+      })
+  })
+}
+updateUserCreatedPosts = async (req, res) => {
+  const body = req.body
+
+  if (!body) {
+    return res.status(400).json({
+      success: false,
+      error: 'Неверно указаны данные в рецепте для обновления'
+    })
+  }
+  UserPosts.findOne({ id: body.id }).exec((err, user) => {
+    if (err) {
+      return res.status(400).json({
+        err,
+        message: 'Рецепт не найден',
+      })
+    };
+    user.createdPosts = body.createdPosts|| Array;
+
+    user.save()
+      .then(() => {
+        res.status(200).json({
+          success: true,
+          id: user.id,
+          message: 'Избранные рецепты обновлены'
+        })
+      })
+      .catch(err => {
+        res.status(404).json({
+          err,
+          message: 'Рецепт не обновлён, произошла ошибка, попробуйте позже'
+        })
+      })
+  })
+}
+const getUser = async (req, res) => {
+  await UserPosts.findOne({ id: req.params.id }).exec((err, user) => {
+    if (err) {
+      return res.status(400).json({ success: false, error: err })
+    }
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'Рецепт не найден' })
+    };
+
+    return res.status(200).json({ success: true, data: user })
+  })
+}
 /*  Скачивание картинки, пока что не нужно
 getRecipeImg = async (req, res) => {
   try {
@@ -192,5 +292,9 @@ module.exports = {
   deleteImg,
   // getRecipeImg,
   // uploadRecipeImg,
-  updateRecipeFavorite
+  updateRecipeFavorite,
+  createUser,
+  updateUserFavoritePosts,
+  updateUserCreatedPosts,
+  getUser
 }

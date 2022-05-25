@@ -94,3 +94,96 @@ body {
   flex-direction: column;
   align-items: center;
 }
+.form-user {
+  display: flex;
+  flex-direction: column;
+}
+.form-user input,
+span {
+  display: inline-block;
+  margin: 0px auto;
+  padding: 5px;
+  min-width: 450px;
+  max-width: 550px;
+  position: relative;
+  margin-top: 20px;
+}
+.form-user input.error {
+  border: 1px solid red;
+}
+.form-user input.agree {
+  border: 1px solid green;
+}
+.form-user button {
+  margin: 0px auto;
+  display: block;
+  margin-top: 30px;
+  padding: 0px 36px;
+  color: #ffffff;
+  background: #30c7a6;
+  align-self: start;
+  height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.4s ease;
+}
+.form-user span[name="email"]::before {
+  content: "Email* ";
+  font-size: 18px;
+  position: absolute;
+  top: 44%;
+  left: -60px;
+  /* width: 25px;
+  height: 25px; */
+  color: black;
+}
+.form-user span[name="surname"]::before {
+  content: "Фамилия* ";
+  font-size: 18px;
+  position: absolute;
+  top: 44%;
+  left: -94px;
+  /* width: 25px;
+  height: 25px; */
+  color: black;
+}
+.form-user span[name="name"]::before {
+  content: "Имя* ";
+  font-size: 18px;
+  position: absolute;
+  top: 44%;
+  left: -48px;
+  /* width: 25px;
+  height: 25px; */
+  color: black;
+}
+.form-user span[name="password"]::before {
+  content: "Пароль* ";
+  font-size: 18px;
+  position: absolute;
+  top: 44%;
+  left: -75px;
+  /* width: 25px;
+  height: 25px; */
+  color: black;
+}
+.form-user span[name="password"]::after {
+  content: "Минимальная длина - 6 символов! ";
+  font-size: 12px;
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  color: rgb(42, 42, 42);
+}
+.form-user span[name="password"] {
+  margin-bottom: 10px;
+}
+textarea {
+  resize: none;
+}
+

@@ -8,16 +8,20 @@ import PopUp from './../../components/UI/popUp/popUp';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsUpdate } from '../../store/slices/isUpdate';
+import { removeCreatedPost, removeUser } from '../../store/slices/userSlice';
 
 const FormEdit = () => {
   const ref = useRef(null);
   const refDescription = useRef(null);
   const isUpdate = useSelector(state => state.isUpdate.isUpdate);
   const posts = useSelector(state => state.posts.posts);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const { id } = useParams();
 
+  const isAuthor = user.createdPosts.includes(id);
+ 
   const i = posts.findIndex(post => id === post._id);
   const { title, anonce, description, ingredients, portions, sweets, author, img, tags, tookTime, spentTime } = posts[i];
   const [descr, setDescr] = useState(description.replace(/<br>/gm, '\n'));
@@ -93,10 +97,21 @@ const FormEdit = () => {
     setData({ ...data, tags: tagsNow })
   }, [tagsNow]);
 
+  const successSubmit = async () => {
+    let ok = await handlerUpdateSumbit({ data, setData, id, route, setTags, ingrids, func: () => dispatch(setIsUpdate(true)) });
+    if (ok) {
+      setVisible(true);
+      setDescr('');
+      setIngrids('');
+      setIsReady(false);
+    } else {
+      setIsReady(false);
+    }
+  };
+
   useEffect(() => {
     if (isReady) {
-      dispatch(setIsUpdate(true));
-      handlerUpdateSumbit({ data, setData, id, route, setTags })
+      successSubmit();
     }
   }, [isReady])
 
@@ -106,6 +121,10 @@ const FormEdit = () => {
   };
   const addIngred = (e) => {
     e.preventDefault();
+    if (!isAuthor) {
+      route(`../recipe/list/${id}`);
+      return;
+    }
     const test = ingrids.split('\n');
     const obj = {};
     test.forEach(elem => {
@@ -121,10 +140,15 @@ const FormEdit = () => {
     setIsReady(true);
   }
   const deleteRecipe = async () => {
+    if (!isAuthor) {
+      route(`../recipe/list/${id}`);
+      return;
+    }
     setIsDelete(true);
-    // dispatch(setIsUpdate(true));
+    dispatch(setIsUpdate(true));
+    dispatch(removeCreatedPost(id))
     await api.deleteRecipeById(id).then(res => {
-      console.log('Рецепт был удалён из БД')
+      console.log('Рецепт был удалён из БД');
     })
   }
   const dontFetch = (e) => {
@@ -197,7 +221,7 @@ const FormEdit = () => {
         <p><textarea id="recipes_ingrid"
           value={ingrids}
           onChange={e => setIngrids(e.target.value)}
-          onKeyDown={e => printTextarea.call(null, e)}
+          onKeyDown={e => printTextarea.call(null, e, false, { setDescr, descr, ingrids, setIngrids })}
           name="recipes_ingrid"
           required
           cols={40} rows={10} /></p>
@@ -238,16 +262,12 @@ const FormEdit = () => {
           : ''
         }
         <label htmlFor="recipes_author">Автор* :</label>
-        <p><select name="recipes_author"
+        <p><input name="recipes_author"
           value={data.author}
           onChange={e => setData({ ...data, author: e.target.value })}
           id="recipes_author"
           style={{ padding: 5 }}>
-          <option value="Александр Максимович К.">Александр Максимович К.</option>
-          <option value="Сергей Евгеньевич Е.">Сергей Евгеньевич Д.</option>
-          <option value="Анна Максимовна К.">Анна Максимовна К.</option>
-          <option value="Людмила Владимировна К.">Людмила Владимировна К.</option>
-        </select></p>
+        </input></p>
         <label htmlFor="recipes_ready">Было готово за* :</label>
         <p><input type="text" id="recipes_ready"
           value={data.tookTime}
@@ -268,9 +288,6 @@ const FormEdit = () => {
           }}>Удалить</button>
         </div>
       </form>
-      {/* } */}
-
-
     </div>
   )
 };

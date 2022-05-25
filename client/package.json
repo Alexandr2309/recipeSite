@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "buffer": "^6.0.3",
+    "firebase": "^9.8.1",
     "jsesc": "^3.0.2",
     "moment": "^2.29.3",
     "react": "^18.1.0",

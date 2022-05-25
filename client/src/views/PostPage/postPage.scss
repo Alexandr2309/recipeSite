@@ -182,3 +182,7 @@
     }
   }
 }
+.page__date-create span,
+.page__date-update span {
+  display: contents;
+}

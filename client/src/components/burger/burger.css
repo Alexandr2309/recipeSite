@@ -32,7 +32,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #000;
+  background-color: #6c9225;
   padding: 15px;
   min-width: 200px;
 }
@@ -52,8 +52,15 @@
   display: none;
 }
 /* ------------------------ */
-body._pc .menu__list > li:hover .menu__sub-list {
+/* body._pc .menu__list > li:hover .menu__sub-list {
   opacity: 1;
+  visibility: visible;
+  transform: translate(0px, 0px);
+  pointer-events: all;
+} */
+
+.menu__sub-list.onvisib {
+  opacity: 0.8;
   visibility: visible;
   transform: translate(0px, 0px);
   pointer-events: all;
@@ -98,7 +105,7 @@ body._lock {
     padding: 10px 0;
   }
   .menu__sub-list {
-    transform: translate(0px, 10%);
+    transform: translate(0px, -10%);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease 0s;
@@ -198,6 +205,13 @@ body._lock {
   }
   .menu__sub-link {
     font-size: 20px;
-    color: #000;
+    color: #000;  
   }
+}
+.avatar-round {
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 100px; /* Радиус скругления */
+  border: 3px solid #30c7a6; /* Параметры рамки */
+  box-shadow: 0 0 7px #666; 
 }

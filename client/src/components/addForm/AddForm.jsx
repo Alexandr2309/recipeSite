@@ -1,36 +1,38 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { IsUpdate } from '../../context/Context';
-import { handlerSumbit, printTextarea } from '../../utils/mostHave';
+import { handlerSumbit, printTextarea, validateFields } from '../../utils/mostHave';
 import PopUp from '../UI/popUp/popUp';
 import SucessDelete from '../UI/sucessDelete/SucessDelete';
 import axios from 'axios'
 import './addForm.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsUpdate } from '../../store/slices/isUpdate';
+import { updatePosts } from '../../store/slices/userSlice';
 
 const AddForm = () => {
-  const ref = useRef(null)
+  const ref = useRef(null);
+  const user = useSelector(state => state.user)
   const refDescription = useRef(null);
   const dispatch = useDispatch();
 
-   function addImage(file) {
-     if(!ref.current.files[0]) return;
-     let imgNow = data.img;
+  function addImage() {
+    if (!ref.current.files[0]) return;
+    let imgNow = data.img;
 
-     const formData = new FormData();
-     formData.append('file', ref.current.files[0])
-     formData.append('upload_preset', 'ef6jgyoo');
-     axios.post('http://api.cloudinary.com/v1_1/saha230904/image/upload', formData)
-     .then(res => {
-       console.log(res);
-       setData({ ...data, img: res.data.secure_url });
+    const formData = new FormData();
+    formData.append('file', ref.current.files[0])
+    formData.append('upload_preset', 'ef6jgyoo');
+    axios.post('http://api.cloudinary.com/v1_1/saha230904/image/upload', formData)
+      .then(res => {
+        console.log(res);
+        setData({ ...data, img: res.data.secure_url });
       });
 
-      if(imgNow) {
-         axios.post('http://localhost:3000/api/recipe-delete_img', {
-          public_id: data.img.match(/recipes\/.+(?=\.)/)
-        })
-      }
+    if (imgNow) {
+      axios.post('http://localhost:3000/api/recipe-delete_img', {
+        public_id: data.img.match(/recipes\/.+(?=\.)/)
+      })
+    }
   }
 
   const isUpdate = useSelector(state => state.isUpdate.isUpdate);
@@ -47,7 +49,7 @@ const AddForm = () => {
     ingredients: {},
     portions: 0,
     sweets: false,
-    author: '',
+    author: `${user.name} ${user.surname}`,
     img: '',
     tags: '',
     tookTime: 0,
@@ -63,13 +65,20 @@ const AddForm = () => {
   useEffect(() => {
     setData({ ...data, tags: tagsNow })
   }, [tagsNow]);
-  useEffect(() => {
-    if (isReady) {
-      dispatch(setIsUpdate(true));
-      handlerSumbit({ setData, setTags, data, setNewId })
+  const successSubmit = async () => {
+    let ok = await handlerSumbit({ setData, setTags, data, setNewId, func: () => dispatch(setIsUpdate(true)), updatePostsFunc: dispatch });
+    if (ok) {
       setVisible(true);
       setDescr('');
       setIngrids('');
+      setIsReady(false);
+    } else {
+      setIsReady(false);
+    }
+  }
+  useEffect(() => {
+    if (isReady) {
+      successSubmit();
     }
   }, [isReady]);
   useEffect(() => {
@@ -96,7 +105,6 @@ const AddForm = () => {
       obj[product] = count;
     });
     const result = descr.replace(/\n/g, '<br>');
-    console.log(result)
     setData({ ...data, ingredients: { ...obj }, description: result });
     setIsReady(true);
   }
@@ -129,7 +137,6 @@ const AddForm = () => {
         id="recipes_photo"
         name="recipes_photo"
         ref={ref}
-        // onChange={sendImg.bind(null, ref, setData, data)} 
         onChange={addImage}
       />
         <label className="upload-file__label" htmlFor="recipes_photo">
@@ -139,8 +146,8 @@ const AddForm = () => {
           </svg>
           <span className="upload-file__text">Прикрепить файл</span>
         </label>
-        <img src={data.img || ''} alt="Превью"  className='img-preview' style={{display: data.img ? 'block' : 'none'}}/>
-        </p>
+        <img src={data.img || ''} alt="Превью" className='img-preview' style={{ display: data.img ? 'block' : 'none' }} />
+      </p>
       <p className='comment'>Если у вас нет готового фото, пропустите этот шаг</p>
       <label htmlFor="recipes_anonce">Краткое описание блюда*:</label>
       <p><input type="text"
@@ -212,16 +219,16 @@ const AddForm = () => {
         : ''
       }
       <label htmlFor="recipes_author">Автор* :</label>
-      <p><select name="recipes_author"
+      <p><input name="recipes_author"
         value={data.author}
         onChange={e => setData({ ...data, author: e.target.value })}
         id="recipes_author"
         style={{ padding: 5 }}>
-        <option value="Александр Максимович К.">Александр Максимович К.</option>
+        {/* <option value="Александр Максимович К.">Александр Максимович К.</option>
         <option value="Сергей Евгеньевич Е.">Сергей Евгеньевич Д.</option>
         <option value="Анна Максимовна К.">Анна Максимовна К.</option>
-        <option value="Людмила Владимировна К.">Людмила Владимировна К.</option>
-      </select></p>
+        <option value="Людмила Владимировна К.">Людмила Владимировна К.</option> */}
+      </input></p>
       <label htmlFor="recipes_ready">Было готово за* :</label>
       <p><input type="text" id="recipes_ready"
         value={data.tookTime}
