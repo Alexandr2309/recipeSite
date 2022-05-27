@@ -154,7 +154,7 @@ getRecipeById = async (req, res) => {
   })
 }
 deleteImg = async (req, res) => {
-  cloudinary.uploader.destroy(req.body.public_id, function (result) { });
+  cloudinary.uploader.destroy(req.body.public_id, function (result) {});
 }
 createUser = async (req, res) => {
   const body = req.body;
