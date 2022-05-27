@@ -1,11 +1,8 @@
-import { useContext, useId, useState, useEffect } from 'react';
+import React, { useSelector } from 'react-redux';
 import Posts from '../../components/Posts';
-import './App.css';
-import { PostsContext, NowPosts } from '../../context/Context';
-import NotFound from '../../components/UI/NotFound/NotFound';
 import Search from '../../components/search/Search';
-import { useSelector, useDispatch } from 'react-redux';
-import { getPosts } from './../../store/slices/posts';
+import NotFound from '../../components/UI/NotFound/NotFound';
+import './App.css';
 
 function All() {
   const posts = useSelector(state => state.posts.posts)

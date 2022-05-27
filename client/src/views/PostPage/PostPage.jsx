@@ -5,10 +5,8 @@ import TableIngreds from '../../components/UI/tableOnPostPage/TableIngreds';
 import edit from '../../images/edit.png';
 import favorite from '../../images/empty-star.svg';
 import favoriteChek from '../../images/fill-star.svg';
-import { setIsUpdate } from '../../store/slices/isUpdate';
 import { removeFavorite, updateFavorite } from '../../store/slices/userSlice';
 import { calendarDateParse } from '../../utils/calendarDateParse';
-import apis from './../../api/index';
 import './postPage.css';
 
 const PostPage = () => {

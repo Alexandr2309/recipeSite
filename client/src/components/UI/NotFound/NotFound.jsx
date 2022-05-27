@@ -1,6 +1,5 @@
 import React from 'react';
-import Search from '../../search/Search';
-import './notFound.css'
+import './notFound.css';
 
 const NotFound = ({text = 'По вашему запросу ничего не найдено'}) => {
   return (

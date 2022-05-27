@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Posts from '../../components/Posts';
 import Search from '../../components/search/Search';
 import NotFound from '../../components/UI/NotFound/NotFound';
-import { updateNowPosts } from '../../store/slices/posts';
 
 function Favorites() {
   const posts = useSelector(state => state.posts.posts)

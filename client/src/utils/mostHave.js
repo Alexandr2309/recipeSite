@@ -125,17 +125,4 @@ export async function handlerSumbit(params) {
   })
   return true;
 };
-// export const sendImg = async (ref, setData, data) => {
-//   if (!ref.current.files[0]) return;
-//   try {
-//     const formData = new FormData();
-//     formData.append('file', ref.current.files[0]);
-//     formData.append('upload_preset', 'ef6jgyoo');
-//     await axios.post('http://localhost:3000/api/recipe-img', formData).then(async (res) => {
-//       setData({ ...data, img: res.data });
-//     })
-//       .catch((err) => ("Error occured", err));
-//   } catch (error) {
-//     console.log(error)
-//   }
-// };
+

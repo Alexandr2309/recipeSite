@@ -1,12 +1,10 @@
-import React, { useState, useContext } from 'react';
-import { NowPosts } from '../../context/Context.js';
-import { cl } from './searchStyles'
-import { PostsContext } from './../../context/Context';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateNowPosts } from '../../store/slices/posts.js';
+import { cl } from './searchStyles';
 
 const Search = () => {
-  // const { nowPosts, updatePosts } = useContext(NowPosts);
+
   const posts = useSelector(state => state.posts.posts)
   const nowPosts = useSelector(state => state.posts.nowPosts)
   const dispatch = useDispatch();
@@ -54,7 +52,7 @@ const Search = () => {
 
   return (
     <div style={cl.wr}>
-      <h1 style={{ margin: '0 0 20px 0', paddingTop: 5}}>Найти рецепт</h1>
+      <h1 style={{ margin: '0 0 20px 0', paddingTop: 5 }}>Найти рецепт</h1>
       <label htmlFor="search" style={cl.label}>Слова в названии рецепта или теги</label>
       <input type="text" id="search" name=""
         style={inpStyle}

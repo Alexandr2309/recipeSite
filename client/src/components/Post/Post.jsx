@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { dateParse } from '../../utils/dateParse';
 import './post.css';
@@ -7,7 +7,7 @@ const Post = ({ _id, title, anonce, author, img, updatedAt }) => {
   const route = useNavigate();
   const [param, setParam] = useSearchParams();
   const location = useLocation();
-  
+
   const navigate = () => {
     route(`../recipe/list/${_id}`)
   }

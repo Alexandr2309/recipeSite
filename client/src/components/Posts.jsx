@@ -1,6 +1,5 @@
 import React from 'react';
 import Post from './Post/Post';
-import Search from './search/Search';
 
 const Posts = ({ posts, sweets = false, title = "Все рецепты", favorite = false }) => {
   return (

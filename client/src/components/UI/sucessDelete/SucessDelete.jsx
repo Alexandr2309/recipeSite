@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
-import gif from '../../../images/success.gif'
-import cl from './successDelete.module.css'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { IsUpdate } from '../../../context/Context';
-import { useSelector, useDispatch } from 'react-redux';
-import { setIsUpdate } from '../../../store/slices/isUpdate';
-import { getPosts } from '../../../store/slices/posts';
+import gif from '../../../images/success.gif';
+import cl from './successDelete.module.css';
 
 const SucessDelete = ({ id = false, title = 'Рецепт успешно удалён', textBtn = 'Вернуться на главную' }) => {
   const route = useNavigate();

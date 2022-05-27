@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
-import { IsUpdate } from '../../context/Context';
-import { handlerSumbit, printTextarea, validateFields } from '../../utils/mostHave';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsUpdate } from '../../store/slices/isUpdate';
+import { handlerSumbit, printTextarea } from '../../utils/mostHave';
 import PopUp from '../UI/popUp/popUp';
 import SucessDelete from '../UI/sucessDelete/SucessDelete';
-import axios from 'axios'
 import './addForm.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { setIsUpdate } from '../../store/slices/isUpdate';
-import { updatePosts } from '../../store/slices/userSlice';
 
 const AddForm = () => {
   const ref = useRef(null);

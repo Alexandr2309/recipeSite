@@ -1,11 +1,9 @@
-import { React, useContext, useRef, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import NotFound from '../../components/UI/NotFound/NotFound';
-import Posts from './../../components/Posts';
-import { PostsContext, NowPosts } from './../../context/Context';
-import Search from './../../components/search/Search';
-import { useSelector, useDispatch } from 'react-redux';
 import { updateNowPosts } from '../../store/slices/posts';
+import Posts from './../../components/Posts';
+import Search from './../../components/search/Search';
 
 const Sweets = () => {
   const posts = useSelector(state => state.posts.posts)

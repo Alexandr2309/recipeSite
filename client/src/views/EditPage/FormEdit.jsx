@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../api/index';
 import SucessDelete from '../../components/UI/sucessDelete/SucessDelete';
-import { IsUpdate, PostsContext } from '../../context/Context';
-import { handlerUpdateSumbit, printTextarea, sendImg } from '../../utils/mostHave';
-import PopUp from './../../components/UI/popUp/popUp';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
 import { setIsUpdate } from '../../store/slices/isUpdate';
-import { removeCreatedPost, removeUser } from '../../store/slices/userSlice';
+import { removeCreatedPost } from '../../store/slices/userSlice';
+import { handlerUpdateSumbit, printTextarea } from '../../utils/mostHave';
+import PopUp from './../../components/UI/popUp/popUp';
 
 const FormEdit = () => {
   const ref = useRef(null);
@@ -21,7 +20,7 @@ const FormEdit = () => {
   const { id } = useParams();
 
   const isAuthor = user.createdPosts.includes(id);
- 
+
   const i = posts.findIndex(post => id === post._id);
   const { title, anonce, description, ingredients, portions, sweets, author, img, tags, tookTime, spentTime } = posts[i];
   const [descr, setDescr] = useState(description.replace(/<br>/gm, '\n'));
